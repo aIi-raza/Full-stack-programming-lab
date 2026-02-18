@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 – To-Do List</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #232526, #414345);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 18px;
+      padding: 36px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    h1 { text-align: center; color: #232526; margin-bottom: 28px; }
+
+    .task-item {
+      background: #f8f9fa;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      transition: all 0.3s;
+    }
+    .task-item.completed {
+      background: #eafaf1;
+      border-color: #82e0aa;
+    }
+    .task-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .task-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #ccc;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .task-input.done {
+      text-decoration: line-through;
+      color: #888;
+      background: #f0f0f0;
+    }
+    .btn-row { display: flex; gap: 8px; }
+    .btn-complete {
+      flex: 1; padding: 9px;
+      background: #2ecc71; color: #fff;
+      border: none; border-radius: 7px;
+      font-weight: 600; cursor: pointer;
+      font-size: 0.88rem;
+    }
+    .btn-remove {
+      flex: 1; padding: 9px;
+      background: #e74c3c; color: #fff;
+      border: none; border-radius: 7px;
+      font-weight: 600; cursor: pointer;
+      font-size: 0.88rem;
+    }
+    .btn-complete:hover { background: #27ae60; }
+    .btn-remove:hover   { background: #c0392b; }
+    #status {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📝 To-Do List</h1>
+  <div id="taskContainer"></div>
+  <div id="status"></div>
+</div>
+
+<script>
+  // ── Fixed tasks ─────────────────────────────────────────────────────────────
+  const tasks = [
+    { id: 1, label: "Task 1", placeholder: "Study JavaScript DOM",    completed: false, visible: true },
+    { id: 2, label: "Task 2", placeholder: "Complete Lab 02 Tasks",   completed: false, visible: true },
+    { id: 3, label: "Task 3", placeholder: "Push code to GitHub",     completed: false, visible: true }
+  ];
+
+  // ── Render all tasks ────────────────────────────────────────────────────────
+  function renderTasks() {
+    const container = document.getElementById("taskContainer");
+    container.innerHTML = "";
+
+    // Loop to style all tasks the same way
+    tasks.forEach(task => {
+      if (!task.visible) return;
+
+      const div = document.createElement("div");
+      div.className = "task-item" + (task.completed ? " completed" : "");
+      div.id = `task-${task.id}`;
+
+      div.innerHTML = `
+        <div class="task-label">${task.label}</div>
+        <input type="text"
+               class="task-input ${task.completed ? 'done' : ''}"
+               id="input-${task.id}"
+               value="${task.placeholder}"
+               ${task.completed ? "disabled" : ""}/>
+        <div class="btn-row">
+          <button class="btn-complete" onclick="toggleComplete(${task.id})">
+            ${task.completed ? "↩ Undo" : "✔ Complete"}
+          </button>
+          <button class="btn-remove" onclick="removeTask(${task.id})">🗑 Remove</button>
+        </div>`;
+
+      container.appendChild(div);
+    });
+    updateStatus();
+  }
+
+  // ── Toggle complete ─────────────────────────────────────────────────────────
+  function toggleComplete(id) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.completed = !task.completed;
+      renderTasks();
+    }
+  }
+
+  // ── Remove task ─────────────────────────────────────────────────────────────
+  function removeTask(id) {
+    const task = tasks.find(t => t.id === id);
+    if (task) {
+      task.visible = false;
+      renderTasks();
+    }
+  }
+
+  // ── Status summary ──────────────────────────────────────────────────────────
+  function updateStatus() {
+    const visible   = tasks.filter(t => t.visible);
+    const completed = visible.filter(t => t.completed);
+    document.getElementById("status").textContent =
+      `✅ ${completed.length} / ${visible.length} tasks completed`;
+  }
+
+  renderTasks();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 2 – Interactive Calculator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calc {
+      background: #1e1e2e;
+      border-radius: 20px;
+      padding: 36px;
+      width: 380px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+    }
+    h1 {
+      text-align: center;
+      color: #cdd6f4;
+      margin-bottom: 28px;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+    label {
+      color: #a6adc8;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 14px;
+    }
+    input[type="number"], select {
+      width: 100%;
+      padding: 12px 14px;
+      background: #313244;
+      border: 2px solid #45475a;
+      border-radius: 10px;
+      color: #cdd6f4;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus { border-color: #89b4fa; }
+    select option { background: #313244; }
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      background: linear-gradient(90deg, #89b4fa, #b4befe);
+      border: none;
+      border-radius: 10px;
+      color: #1e1e2e;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; transform: scale(1.02); }
+    #resultBox {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      transition: background 0.4s, color 0.4s;
+      display: none;
+      color: #1e1e2e;
+    }
+    #errorMsg {
+      margin-top: 12px;
+      color: #f38ba8;
+      font-size: 0.9rem;
+      text-align: center;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="calc">
+  <h1>🔢 Calculator</h1>
+
+  <label>Number 1</label>
+  <input type="number" id="num1" placeholder="e.g. 10"/>
+
+  <label>Operation</label>
+  <select id="operation">
+    <option value="add">➕ Addition</option>
+    <option value="sub">➖ Subtraction</option>
+    <option value="mul">✖️ Multiplication</option>
+    <option value="div">➗ Division</option>
+  </select>
+
+  <label>Number 2</label>
+  <input type="number" id="num2" placeholder="e.g. 5"/>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="errorMsg"></div>
+  <div id="resultBox"></div>
+</div>
+
+<script>
+  function calculate() {
+    const n1  = parseFloat(document.getElementById("num1").value);
+    const n2  = parseFloat(document.getElementById("num2").value);
+    const op  = document.getElementById("operation").value;
+    const err = document.getElementById("errorMsg");
+    const box = document.getElementById("resultBox");
+
+    err.textContent = "";
+    box.style.display = "none";
+
+    // ── Input validation ────────────────────────────────────────────────────
+    if (isNaN(n1) || isNaN(n2)) {
+      err.textContent = "⚠️ Please enter valid numbers in both fields.";
+      return;
+    }
+    if (op === "div" && n2 === 0) {
+      err.textContent = "🚫 Division by zero is not allowed!";
+      return;
+    }
+
+    // ── Calculate ───────────────────────────────────────────────────────────
+    let result;
+    if      (op === "add") result = n1 + n2;
+    else if (op === "sub") result = n1 - n2;
+    else if (op === "mul") result = n1 * n2;
+    else                   result = n1 / n2;
+
+    // ── Display with colour based on positive / negative ───────────────────
+    box.style.display = "block";
+    box.textContent   = `= ${parseFloat(result.toFixed(6))}`;
+
+    if (result > 0)      { box.style.background = "#a6e3a1"; } // green
+    else if (result < 0) { box.style.background = "#f38ba8"; } // red
+    else                 { box.style.background = "#f9e2af"; } // yellow (zero)
+  }
+</script>
+</body>
+</html>

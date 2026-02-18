@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 5 – Form Validation</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .form-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+    }
+    h1 { text-align: center; color: #0f3460; margin-bottom: 30px; }
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #ddd;
+      border-radius: 9px;
+      font-size: 0.97rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #0f3460; }
+    input.valid   { border-color: #27ae60; }
+    input.invalid { border-color: #e74c3c; }
+    .error-msg {
+      color: #e74c3c;
+      font-size: 0.82rem;
+      margin-top: 5px;
+      min-height: 18px;
+      font-weight: 500;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #0f3460, #533483);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+    #successMsg {
+      display: none;
+      margin-top: 20px;
+      background: #d4edda;
+      color: #155724;
+      padding: 18px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="form-card">
+  <h1>📋 Registration Form</h1>
+
+  <div class="field">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Enter your name" oninput="validateName()"/>
+    <div class="error-msg" id="nameErr"></div>
+  </div>
+
+  <div class="field">
+    <label for="email">Email Address</label>
+    <input type="text" id="email" placeholder="Enter your email" oninput="validateEmail()"/>
+    <div class="error-msg" id="emailErr"></div>
+  </div>
+
+  <div class="field">
+    <label for="age">Age</label>
+    <input type="number" id="age" placeholder="Enter your age (18–60)" oninput="validateAge()"/>
+    <div class="error-msg" id="ageErr"></div>
+  </div>
+
+  <div class="field">
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Min 6 characters" oninput="validatePassword()"/>
+    <div class="error-msg" id="passErr"></div>
+  </div>
+
+  <button class="submit-btn" onclick="submitForm()">Register</button>
+  <div id="successMsg">🎉 Registration Successful! Welcome aboard!</div>
+</div>
+
+<script>
+  // ── Individual validation functions ─────────────────────────────────────────
+
+  function validateName() {
+    const val = document.getElementById("name").value.trim();
+    const err = document.getElementById("nameErr");
+    const inp = document.getElementById("name");
+    if (val === "") {
+      err.textContent = "⚠️ Name cannot be empty.";
+      inp.className = "invalid"; return false;
+    }
+    err.textContent = ""; inp.className = "valid"; return true;
+  }
+
+  function validateEmail() {
+    const val = document.getElementById("email").value.trim();
+    const err = document.getElementById("emailErr");
+    const inp = document.getElementById("email");
+    if (!val.includes("@")) {
+      err.textContent = "⚠️ Email must contain @.";
+      inp.className = "invalid"; return false;
+    }
+    err.textContent = ""; inp.className = "valid"; return true;
+  }
+
+  function validateAge() {
+    const val = parseInt(document.getElementById("age").value);
+    const err = document.getElementById("ageErr");
+    const inp = document.getElementById("age");
+    if (isNaN(val) || val < 18 || val > 60) {
+      err.textContent = "⚠️ Age must be between 18 and 60.";
+      inp.className = "invalid"; return false;
+    }
+    err.textContent = ""; inp.className = "valid"; return true;
+  }
+
+  function validatePassword() {
+    const val = document.getElementById("password").value;
+    const err = document.getElementById("passErr");
+    const inp = document.getElementById("password");
+    if (val.length < 6) {
+      err.textContent = "⚠️ Password must be at least 6 characters.";
+      inp.className = "invalid"; return false;
+    }
+    err.textContent = ""; inp.className = "valid"; return true;
+  }
+
+  // ── Submit: validate all fields ─────────────────────────────────────────────
+  function submitForm() {
+    const ok = validateName() & validateEmail() & validateAge() & validatePassword();
+
+    if (!ok) {
+      alert("❌ Please fix the errors before submitting.");
+      return;
+    }
+
+    // Confirm submission
+    const name = document.getElementById("name").value.trim();
+    const confirmed = confirm(`✅ Ready to register as "${name}"?\nClick OK to confirm.`);
+
+    if (confirmed) {
+      document.getElementById("successMsg").style.display = "block";
+      // BONUS: Prompt for newsletter
+      const sub = prompt(`Welcome, ${name}! Subscribe to our newsletter? (yes/no)`);
+      if (sub && sub.toLowerCase() === "yes") {
+        alert("🎉 You have been subscribed to our newsletter!");
+      } else {
+        alert("👍 No problem! You can subscribe anytime from your profile.");
+      }
+    }
+  }
+</script>
+</body>
+</html>

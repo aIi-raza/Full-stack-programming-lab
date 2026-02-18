@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 1 – Dynamic Quiz</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    h1 {
+      text-align: center;
+      color: #0f3460;
+      margin-bottom: 28px;
+      font-size: 1.8rem;
+    }
+    .question-block {
+      background: #f0f4ff;
+      border-left: 4px solid #0f3460;
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .question-block p {
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+    }
+    .question-block input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #ccd5f5;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .question-block input:focus { border-color: #0f3460; }
+    .feedback {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .correct { color: #27ae60; }
+    .wrong   { color: #e74c3c; }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    button {
+      flex: 1;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.85; }
+    #submitBtn { background: #0f3460; color: #fff; }
+    #resetBtn  { background: #e74c3c; color: #fff; }
+    #result {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: none;
+    }
+    .result-great  { background: #d4edda; color: #155724; }
+    .result-ok     { background: #fff3cd; color: #856404; }
+    .result-poor   { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🧠 JS Knowledge Quiz</h1>
+  <div id="quiz-form"></div>
+  <div class="btn-row">
+    <button id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+    <button id="resetBtn"  onclick="resetQuiz()">Reset Quiz</button>
+  </div>
+  <div id="result"></div>
+</div>
+
+<script>
+  // ── Questions data ──────────────────────────────────────────────────────────
+  const questions = [
+    { q: "1. What keyword is used to declare a variable in modern JS?",  answer: "let" },
+    { q: "2. Which method adds an element to the end of an array?",       answer: "push" },
+    { q: "3. What does DOM stand for?",                                   answer: "document object model" },
+    { q: "4. Which operator checks value AND type equality?",             answer: "===" },
+    { q: "5. What HTML tag links an external JS file?",                   answer: "script" }
+  ];
+
+  // ── Build quiz dynamically ──────────────────────────────────────────────────
+  function buildQuiz() {
+    const form = document.getElementById("quiz-form");
+    form.innerHTML = "";
+    questions.forEach((item, i) => {
+      form.innerHTML += `
+        <div class="question-block">
+          <p>${item.q}</p>
+          <input type="text" id="ans${i}" placeholder="Your answer…" />
+          <div class="feedback" id="fb${i}"></div>
+        </div>`;
+    });
+  }
+
+  // ── Check individual answer ─────────────────────────────────────────────────
+  function checkAnswer(index) {
+    const userInput = document.getElementById(`ans${index}`).value.trim().toLowerCase();
+    const correct   = questions[index].answer.toLowerCase();
+    return userInput === correct;
+  }
+
+  // ── Submit and calculate score ──────────────────────────────────────────────
+  function submitQuiz() {
+    let score = 0;
+    questions.forEach((_, i) => {
+      const fb = document.getElementById(`fb${i}`);
+      if (checkAnswer(i)) {
+        score++;
+        fb.textContent = "✅ Correct!";
+        fb.className   = "feedback correct";
+      } else {
+        fb.textContent = `❌ Wrong! Answer: ${questions[i].answer}`;
+        fb.className   = "feedback wrong";
+      }
+    });
+    showResult(score);
+  }
+
+  // ── Display result with conditional message ─────────────────────────────────
+  function showResult(score) {
+    const resultDiv = document.getElementById("result");
+    resultDiv.style.display = "block";
+    const total = questions.length;
+
+    let cls, msg;
+    if (score === total) {
+      cls = "result-great"; msg = `🎉 Perfect Score! ${score}/${total} — Excellent!`;
+    } else if (score >= Math.ceil(total / 2)) {
+      cls = "result-ok";   msg = `👍 Good Job! ${score}/${total} — Keep practising!`;
+    } else {
+      cls = "result-poor"; msg = `😟 Needs Work. ${score}/${total} — Review the material.`;
+    }
+    resultDiv.className = cls;
+    resultDiv.textContent = msg;
+  }
+
+  // ── Reset quiz ──────────────────────────────────────────────────────────────
+  function resetQuiz() {
+    buildQuiz();
+    const result = document.getElementById("result");
+    result.style.display = "none";
+    result.className = "";
+  }
+
+  // ── Init ────────────────────────────────────────────────────────────────────
+  buildQuiz();
+</script>
+</body>
+</html>

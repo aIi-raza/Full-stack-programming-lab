@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 4 – Color Box Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a1a;
+      min-height: 100vh;
+      padding: 30px;
+      color: #eee;
+    }
+    h1 { text-align: center; margin-bottom: 8px; font-size: 2rem; }
+    .bom-info {
+      text-align: center;
+      font-size: 0.82rem;
+      color: #aaa;
+      margin-bottom: 26px;
+      background: #111;
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .inputs-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .color-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .color-group label {
+      font-size: 0.8rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .color-group input[type="text"] {
+      padding: 10px 14px;
+      background: #1a1a2e;
+      border: 2px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      width: 160px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .color-group input:focus { border-color: #89b4fa; }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    button:hover { opacity: 0.85; transform: scale(1.03); }
+    #addBtn   { background: #89b4fa; color: #1e1e2e; }
+    #clearBtn { background: #f38ba8; color: #1e1e2e; }
+    #boxGrid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .color-box {
+      width: 140px;
+      height: 140px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      animation: popIn 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      color: #fff;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    #noBoxMsg { text-align: center; color: #555; font-size: 0.95rem; }
+    #errMsg { text-align: center; color: #f38ba8; margin-top: -10px; margin-bottom: 10px; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🎨 Color Box Generator</h1>
+
+  <!-- BONUS: BOM info -->
+  <div class="bom-info" id="bomInfo">Loading browser info…</div>
+
+  <div class="inputs-row">
+    <div class="color-group">
+      <label>Color 1</label>
+      <input type="text" id="color1" placeholder="e.g. crimson"/>
+    </div>
+    <div class="color-group">
+      <label>Color 2</label>
+      <input type="text" id="color2" placeholder="e.g. #3498db"/>
+    </div>
+    <div class="color-group">
+      <label>Color 3</label>
+      <input type="text" id="color3" placeholder="e.g. rgb(100,200,50)"/>
+    </div>
+  </div>
+
+  <div id="errMsg"></div>
+
+  <div class="btn-row">
+    <button id="addBtn"   onclick="addColors()">➕ Add Colors</button>
+    <button id="clearBtn" onclick="clearBoxes()">🗑 Clear All</button>
+  </div>
+
+  <div id="boxGrid">
+    <p id="noBoxMsg">Enter colors above and click Add Colors!</p>
+  </div>
+
+<script>
+  // ── BONUS: BOM – Browser info ───────────────────────────────────────────────
+  function showBomInfo() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const browser = navigator.userAgent.split(') ')[0].split('(')[1] || "Unknown";
+    document.getElementById("bomInfo").innerHTML =
+      `🖥 Window: <b>${w}×${h}px</b> &nbsp;|&nbsp; ` +
+      `🌐 Browser: <b>${navigator.appName}</b> &nbsp;|&nbsp; ` +
+      `💻 Platform: <b>${navigator.platform}</b> &nbsp;|&nbsp; ` +
+      `🌍 Language: <b>${navigator.language}</b>`;
+  }
+  showBomInfo();
+  window.addEventListener("resize", showBomInfo);
+
+  // ── Validate color using a temporary element ────────────────────────────────
+  function isValidColor(color) {
+    const s = new Option().style;
+    s.color = color;
+    return s.color !== "";
+  }
+
+  // ── Handle each color input using individual functions ──────────────────────
+  function handleColorInput(inputId) {
+    const value = document.getElementById(inputId).value.trim();
+    if (!value) return null;
+    if (!isValidColor(value)) return false;
+    return value;
+  }
+
+  // ── Add color boxes to DOM ──────────────────────────────────────────────────
+  function addColors() {
+    const ids = ["color1", "color2", "color3"];
+    const errDiv = document.getElementById("errMsg");
+    const grid   = document.getElementById("boxGrid");
+    const noMsg  = document.getElementById("noBoxMsg");
+    let added = 0;
+    let errors = [];
+
+    ids.forEach(id => {
+      const result = handleColorInput(id);
+      if (result === null) return;               // empty → skip
+      if (result === false) {
+        errors.push(document.getElementById(id).value.trim());
+        return;
+      }
+      // Create and append color box
+      const box = document.createElement("div");
+      box.className = "color-box";
+      box.style.background = result;
+      box.innerHTML = `<span>${result}</span>`;
+      if (noMsg) noMsg.remove();
+      grid.appendChild(box);
+      added++;
+    });
+
+    errDiv.textContent = errors.length
+      ? `⚠️ Invalid color(s): ${errors.join(", ")}`
+      : "";
+
+    // Clear inputs after adding
+    if (added > 0) ids.forEach(id => document.getElementById(id).value = "");
+  }
+
+  // ── Clear all boxes ─────────────────────────────────────────────────────────
+  function clearBoxes() {
+    const grid = document.getElementById("boxGrid");
+    grid.innerHTML = `<p id="noBoxMsg">Enter colors above and click Add Colors!</p>`;
+    document.getElementById("errMsg").textContent = "";
+  }
+</script>
+</body>
+</html>
