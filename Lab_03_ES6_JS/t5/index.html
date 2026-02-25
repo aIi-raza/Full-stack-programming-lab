@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Catalog</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>Product Catalog</h1>
+    </header>
+    <main>
+        <div class="controls">
+            <div class="control-group">
+                <input type="text" id="searchInput" placeholder="Enter Product ID (e.g. P001)" />
+                <button onclick="searchProduct()">Search</button>
+            </div>
+            <div class="control-group">
+                <input type="text" id="deleteInput" placeholder="Enter Product ID to delete" />
+                <button class="btn-danger" onclick="deleteProduct()">Delete</button>
+            </div>
+        </div>
+        <div id="output"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

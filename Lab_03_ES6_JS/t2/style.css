@@ -1,0 +1,306 @@
+/* ================================================
+   Lab 03 · Task 02 — Online Shopping Cart
+   Professional Glassmorphic Theme
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-base: #0a0f1e;
+    --bg-surface: rgba(255, 255, 255, 0.04);
+    --bg-elevated: rgba(255, 255, 255, 0.07);
+    --bg-hover: rgba(255, 255, 255, 0.10);
+    --glass-blur: blur(16px);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-border-hi: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --accent: #60a5fa;
+    --accent-dim: rgba(96, 165, 250, 0.12);
+    --accent-border: rgba(96, 165, 250, 0.22);
+    --green: #4ade80;
+    --green-dim: rgba(74, 222, 128, 0.12);
+    --text-1: rgba(255, 255, 255, 0.92);
+    --text-2: rgba(255, 255, 255, 0.55);
+    --text-3: rgba(255, 255, 255, 0.28);
+    --radius-lg: 16px;
+    --radius: 12px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: var(--bg-base);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 15% 10%, rgba(96, 165, 250, 0.11) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 90%, rgba(52, 211, 153, 0.07) 0%, transparent 60%);
+    color: var(--text-1);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ─────────────────────────────────────  */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 36px;
+    background: rgba(10, 15, 30, 0.82);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+header::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 22px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, var(--accent), rgba(96, 165, 250, 0.2));
+    flex-shrink: 0;
+}
+
+header::after {
+    content: 'Lab 03  ·  Task 02 / 07  ·  Destructuring & Spread';
+    margin-left: auto;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-3);
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -0.3px;
+}
+
+/* ── LAYOUT ─────────────────────────────────────  */
+main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 36px 72px;
+}
+
+main::before {
+    content: 'Cart Overview';
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* Output stacks vertically */
+#output {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ── CART SUMMARY BANNER ─────────────────────────  */
+.cart-summary {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--glass-shadow);
+}
+
+.cart-summary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+
+.cart-icon {
+    font-size: 1.8rem;
+}
+
+.cart-info h2 {
+    font-size: 0.67rem;
+    font-weight: 700;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.cart-count {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--text-1);
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+/* ── SECTION TITLES ──────────────────────────────  */
+.section-title {
+    font-size: 0.63rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    color: var(--text-3);
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--glass-border);
+}
+
+/* ── FEATURED FIRST ITEM ─────────────────────────  */
+.first-item-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-hi);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--glass-shadow);
+}
+
+.first-item-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+}
+
+.item-icon {
+    font-size: 2.4rem;
+    min-width: 48px;
+    text-align: center;
+}
+
+.item-details h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+}
+
+.item-price {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-1);
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.item-qty {
+    font-size: 0.73rem;
+    color: var(--text-3);
+}
+
+.first-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--accent-border);
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+}
+
+/* ── REMAINING ITEMS GRID ────────────────────────  */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.item-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.item-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.item-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--glass-border-hi);
+    background: var(--bg-elevated);
+}
+
+.item-card h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 8px;
+}
+
+.item-card .price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-1);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+}
+
+.item-card .qty {
+    font-size: 0.72rem;
+    color: var(--text-3);
+}

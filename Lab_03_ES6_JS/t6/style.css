@@ -1,0 +1,374 @@
+/* ================================================
+   Lab 03 · Task 06 — Mini University Portal
+   Professional Glassmorphic Theme
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-base: #0a0f1e;
+    --bg-surface: rgba(255, 255, 255, 0.04);
+    --bg-elevated: rgba(255, 255, 255, 0.07);
+    --bg-hover: rgba(255, 255, 255, 0.10);
+    --glass-blur: blur(16px);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-border-hi: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --accent: #60a5fa;
+    --accent-dim: rgba(96, 165, 250, 0.12);
+    --accent-border: rgba(96, 165, 250, 0.22);
+    --green: #4ade80;
+    --green-dim: rgba(74, 222, 128, 0.12);
+    --green-border: rgba(74, 222, 128, 0.22);
+    --sky: #38bdf8;
+    --sky-dim: rgba(56, 189, 248, 0.12);
+    --sky-border: rgba(56, 189, 248, 0.22);
+    --text-1: rgba(255, 255, 255, 0.92);
+    --text-2: rgba(255, 255, 255, 0.55);
+    --text-3: rgba(255, 255, 255, 0.28);
+    --radius-lg: 16px;
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: var(--bg-base);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 15% 10%, rgba(96, 165, 250, 0.11) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 85%, rgba(99, 102, 241, 0.09) 0%, transparent 60%);
+    color: var(--text-1);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ──────────────────────────────────────  */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 0 36px;
+    background: rgba(10, 15, 30, 0.82);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+header::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 22px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, var(--accent), rgba(96, 165, 250, 0.2));
+    flex-shrink: 0;
+}
+
+header::after {
+    content: 'Lab 03  ·  Task 06 / 07  ·  Class Inheritance & Promises';
+    margin-left: auto;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-3);
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-1);
+    letter-spacing: -0.3px;
+}
+
+/* ── LAYOUT ──────────────────────────────────────  */
+main {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 32px 36px 72px;
+}
+
+/* ── CONTROL CARDS ROW ───────────────────────────  */
+.portal-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 620px) {
+    .portal-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+.control-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    box-shadow: var(--glass-shadow);
+}
+
+.control-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+}
+
+.control-card h2 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--text-3);
+    margin-bottom: 16px;
+}
+
+.control-card input {
+    width: 100%;
+    display: block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    color: var(--text-1);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.control-card input:focus {
+    border-color: var(--glass-border-hi);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.control-card input::placeholder {
+    color: var(--text-3);
+}
+
+/* ── BUTTONS ──────────────────────────────────────  */
+button {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+    transition: background 0.18s ease, transform 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.btn-add {
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    color: var(--green);
+}
+
+.btn-add:hover {
+    background: rgba(74, 222, 128, 0.20);
+}
+
+.btn-register {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+}
+
+.btn-register:hover {
+    background: rgba(96, 165, 250, 0.20);
+}
+
+.btn-save {
+    background: var(--sky-dim);
+    border: 1px solid var(--sky-border);
+    color: var(--sky);
+}
+
+.btn-save:hover {
+    background: rgba(56, 189, 248, 0.20);
+}
+
+/* ── DATA PANELS ──────────────────────────────────  */
+#output {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 620px) {
+    #output {
+        grid-template-columns: 1fr;
+    }
+}
+
+.data-panel {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--glass-shadow);
+}
+
+.data-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.panel-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: var(--text-3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.panel-count {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+}
+
+/* Student entries */
+.student-entry {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.student-entry:last-child {
+    border-bottom: none;
+}
+
+.student-entry .s-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-1);
+    margin-bottom: 3px;
+}
+
+.student-entry .s-id {
+    font-size: 0.70rem;
+    color: var(--text-3);
+    margin-bottom: 7px;
+}
+
+.s-courses-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.s-course-tag {
+    font-size: 0.63rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+}
+
+/* Course pills */
+.course-pill {
+    font-size: 0.82rem;
+    padding: 9px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--text-2);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.18s ease;
+}
+
+.course-pill:hover {
+    background: var(--bg-hover);
+}
+
+.course-pill::before {
+    content: '📚';
+    font-size: 0.85rem;
+}
+
+.empty-msg {
+    color: var(--text-3);
+    font-size: 0.80rem;
+    font-style: italic;
+}
+
+/* ── SAVE TOAST ───────────────────────────────────  */
+.save-toast {
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    color: var(--green);
+    border-radius: var(--radius);
+    padding: 11px 18px;
+    margin-bottom: 18px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    animation: fadeUp 0.35s ease;
+}
+
+.save-loading {
+    background: var(--sky-dim);
+    border-color: var(--sky-border);
+    color: var(--sky);
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
