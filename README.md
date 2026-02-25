@@ -1,1 +1,1 @@
-# Full-stack-programming-lab2
+# Full-stack-programming-lab
