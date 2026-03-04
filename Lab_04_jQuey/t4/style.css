@@ -1,0 +1,148 @@
+/* =============================================
+   TASK 4 - Tabbed Content with Smooth Scroll
+   DOM Manipulation: sections shown/hidden by jQuery
+   Effects & Animations: fadeIn on content, smooth scroll
+   Event Handling: tab button clicks handled by jQuery
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Manrope:wght@400;600;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Disable native smooth scroll; jQuery .animate() handles it */
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: #f7f3ee;
+  color: #1c1c1c;
+  padding: 2rem;
+}
+
+header {
+  max-width: 760px;
+  margin: 0 auto 2rem;
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #1c1c1c;
+}
+
+.subtitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 0.25rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ---- Tab Navigation Bar ---- */
+/* Sticky so it stays visible while scrolling */
+.tab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #1c1c1c;
+  display: flex;
+  gap: 0;
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #777;
+  padding: 1rem 0.5rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+/* CSS Manipulation: jQuery adds/removes .active on tab buttons */
+.tab-btn.active {
+  color: #f5e642;
+  border-bottom-color: #f5e642;
+}
+
+.tab-btn:hover {
+  color: #ddd;
+}
+
+/* ---- Content Sections ---- */
+.tab-section {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  background: #fff;
+  border-left: 4px solid #eee;
+  display: none; /* Hidden by default; jQuery shows active section */
+}
+
+/* DOM Manipulation: .active class shows the section */
+.tab-section.active {
+  display: block;
+  /* Effects & Animations: CSS animation plays when section becomes active */
+  animation: fadeSlide 0.4s ease;
+}
+
+/* Effects & Animations: Slide-up fade-in on content display */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tab-section h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.tab-section .tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  background: #f5e642;
+  color: #1c1c1c;
+  padding: 0.2rem 0.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.tab-section p {
+  color: #555;
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+.tab-section ul {
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+  color: #555;
+  line-height: 2;
+}
+
+/* Unique left-border color per tab */
+#tab-html   { border-left-color: #f97316; }
+#tab-css    { border-left-color: #3b82f6; }
+#tab-js     { border-left-color: #f5e642; }
+#tab-jquery { border-left-color: #22c55e; }
+#tab-ajax   { border-left-color: #a855f7; }

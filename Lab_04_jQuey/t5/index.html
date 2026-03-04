@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 5 – Chained Style Editor</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="wrap">
+    <h1>Style Editor</h1>
+    <p class="subtitle">Task 05 — CSS Manipulation · Chaining · Event Handling</p>
+
+    <!-- =============================================
+         TEXT BLOCK
+         This is the element whose styles are changed
+         dynamically using jQuery .css() chaining
+         (Used in: CSS Manipulation, Chaining)
+         GOAL: Apply multiple styles at once using chaining
+    ============================================= -->
+    <div id="textBlock">The quick brown fox jumps over the lazy dog.</div>
+
+    <!-- =============================================
+         FONT SIZE BUTTONS
+         (Used in: CSS Manipulation, Event Handling)
+    ============================================= -->
+    <div class="group">
+      <p class="group-label">Font Size</p>
+      <div class="btn-row">
+        <button class="style-btn" data-action="size-sm">Small</button>
+        <button class="style-btn" data-action="size-md">Medium</button>
+        <button class="style-btn" data-action="size-lg">Large</button>
+        <button class="style-btn" data-action="size-xl">XL</button>
+      </div>
+    </div>
+
+    <!-- =============================================
+         TEXT COLOR BUTTONS
+         (Used in: CSS Manipulation, Event Handling)
+    ============================================= -->
+    <div class="group">
+      <p class="group-label">Text Color</p>
+      <div class="btn-row">
+        <button class="style-btn" data-action="color-white">White</button>
+        <button class="style-btn" data-action="color-yellow">Yellow</button>
+        <button class="style-btn" data-action="color-cyan">Cyan</button>
+        <button class="style-btn" data-action="color-pink">Pink</button>
+        <button class="style-btn" data-action="color-green">Green</button>
+      </div>
+    </div>
+
+    <!-- =============================================
+         BACKGROUND COLOR BUTTONS
+         (Used in: CSS Manipulation, Event Handling)
+    ============================================= -->
+    <div class="group">
+      <p class="group-label">Background</p>
+      <div class="btn-row">
+        <button class="style-btn" data-action="bg-dark">Dark</button>
+        <button class="style-btn" data-action="bg-blue">Blue</button>
+        <button class="style-btn" data-action="bg-purple">Purple</button>
+        <button class="style-btn" data-action="bg-orange">Orange</button>
+      </div>
+    </div>
+
+    <!-- =============================================
+         STYLE TOGGLE BUTTONS (Bold, Italic, etc.)
+         These toggle styles on and off using Chaining
+         GOAL: Toggle styles using chaining
+         (Used in: Chaining, CSS Manipulation, Event Handling)
+    ============================================= -->
+    <div class="group">
+      <p class="group-label">Style Toggles</p>
+      <div class="btn-row">
+        <button class="style-btn" id="boldBtn"      data-action="toggle-bold">Bold</button>
+        <button class="style-btn" id="italicBtn"    data-action="toggle-italic">Italic</button>
+        <button class="style-btn" id="underlineBtn" data-action="toggle-underline">Underline</button>
+        <button class="style-btn" id="shadowBtn"    data-action="toggle-shadow">Shadow</button>
+      </div>
+    </div>
+
+    <!-- Reset Button: resets all styles using Chaining -->
+    <button id="resetBtn">↺ Reset All</button>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

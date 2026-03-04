@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 – Interactive Form Validation</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Register</h1>
+    <p class="subtitle">Task 03 — Event Handling · CSS Manipulation · DOM Manipulation</p>
+
+    <!-- =============================================
+         FORM FIELDS
+         Each input is validated on blur (losing focus)
+         Error messages are shown/hidden by jQuery
+         (Used in: Event Handling, DOM Manipulation)
+    ============================================= -->
+
+    <!-- Full Name Field -->
+    <div class="field">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" placeholder="John Doe"/>
+      <!-- DOM Manipulation: this error message shown/hidden by jQuery -->
+      <p class="error-msg" id="nameErr">Name must be at least 3 characters.</p>
+    </div>
+
+    <!-- Email Field -->
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="john@example.com"/>
+      <p class="error-msg" id="emailErr">Please enter a valid email address.</p>
+    </div>
+
+    <!-- Password Field -->
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Min 6 characters"/>
+      <p class="error-msg" id="passErr">Password must be at least 6 characters.</p>
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="field">
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" placeholder="Re-enter password"/>
+      <p class="error-msg" id="confirmErr">Passwords do not match.</p>
+    </div>
+
+    <!-- =============================================
+         SUBMIT BUTTON
+         Triggers full validation without page refresh
+         (Used in: Event Handling, DOM Manipulation)
+    ============================================= -->
+    <button class="submit-btn" id="submitBtn">Create Account</button>
+
+    <!-- =============================================
+         SUCCESS MESSAGE
+         Hidden by default; shown by jQuery on valid submit
+         (Used in: DOM Manipulation)
+         GOAL: Display success message without page refresh
+    ============================================= -->
+    <div id="successMsg">
+      <span>✓</span>
+      Account created successfully!
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

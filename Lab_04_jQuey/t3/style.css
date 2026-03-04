@@ -1,0 +1,151 @@
+/* =============================================
+   TASK 3 - Interactive Form Validation
+   CSS Manipulation: .error and .success classes
+   are added/removed by jQuery to visually highlight
+   fields. Error messages are shown/hidden by jQuery.
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(135deg, #1a1f3c 0%, #0d1117 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  border-radius: 2px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0d1117;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  font-size: 0.72rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+
+/* ---- Form Fields ---- */
+.field {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 2px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fafafa;
+}
+
+input:focus {
+  border-color: #4f46e5;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+}
+
+/* CSS Manipulation: jQuery adds/removes .error class on blur */
+input.error {
+  border-color: #ef4444;
+  background: #fff5f5;
+}
+
+/* CSS Manipulation: jQuery adds/removes .success class on blur */
+input.success {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+/* ---- Error Messages ---- */
+/* DOM Manipulation: jQuery shows/hides these with slideDown/slideUp */
+.error-msg {
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 0.3rem;
+  display: none; /* Hidden by default */
+}
+
+/* ---- Submit Button ---- */
+.submit-btn {
+  width: 100%;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 0.9rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.1s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  background: #3730a3;
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ---- Success Message ---- */
+/* DOM Manipulation: jQuery shows this on valid form submission (no page refresh) */
+#successMsg {
+  display: none; /* Hidden by default */
+  background: #f0fdf4;
+  border: 1.5px solid #22c55e;
+  color: #166534;
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+
+#successMsg span {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}

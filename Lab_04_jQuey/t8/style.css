@@ -1,0 +1,255 @@
+/* =============================================
+   TASK 8 - Quiz Game
+   DOM Manipulation: screens, questions, options
+                     all built/switched by jQuery
+   Event Handling: answer click, next, start, retry
+   Effects & Animations: fadeIn/fadeOut between screens
+   CSS Manipulation: .correct / .wrong on option buttons
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #09090b;
+  color: #fafafa;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.quiz-box {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* =============================================
+   START SCREEN
+   DOM Manipulation: hidden/shown by jQuery
+============================================= */
+#startScreen {
+  text-align: center;
+}
+
+#startScreen h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #f5e642, #ff6b35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+#startScreen p {
+  color: #71717a;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+/* =============================================
+   QUIZ SCREEN
+   DOM Manipulation: hidden by default
+============================================= */
+#quizScreen {
+  display: none;
+}
+
+/* ---- Progress Bar ---- */
+/* DOM Manipulation: width updated per question by jQuery */
+.progress-bar-wrap {
+  background: #27272a;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #f5e642, #ff6b35);
+  width: 0%;
+  transition: width 0.4s ease; /* Effects: smooth progress bar animation */
+}
+
+/* DOM Manipulation: text updated each question */
+.q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.q-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.65rem;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.q-score {
+  font-size: 0.75rem;
+  color: #f5e642;
+  font-weight: 700;
+}
+
+/* DOM Manipulation: question text changed each turn */
+#questionText {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 1.8rem;
+  min-height: 80px;
+}
+
+/* ---- Answer Options ---- */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* DOM Manipulation: option buttons created dynamically by jQuery */
+.option-btn {
+  background: #18181b;
+  border: 1.5px solid #3f3f46;
+  color: #fafafa;
+  padding: 0.9rem 1.2rem;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: #f5e642;
+  transform: translateX(4px);
+}
+
+.opt-letter {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.65rem;
+  color: #71717a;
+  min-width: 18px;
+}
+
+/* CSS Manipulation: jQuery adds .correct / .wrong after answering */
+/* Requirement: Highlight correct/wrong answers */
+.option-btn.correct {
+  background: #14532d;
+  border-color: #22c55e;
+  color: #fff;
+}
+
+.option-btn.wrong {
+  background: #7f1d1d;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.option-btn:disabled {
+  cursor: default;
+  transform: none;
+}
+
+/* DOM Manipulation: feedback message shown after answering */
+#feedback {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 1.2rem;
+  color: #94a3b8;
+}
+
+/* DOM Manipulation: hidden by default, shown after answering */
+#nextBtn {
+  display: none;
+  margin-top: 1.5rem;
+  background: #f5e642;
+  color: #09090b;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#nextBtn:hover {
+  background: #ffe800;
+  transform: translateY(-1px);
+}
+
+/* =============================================
+   RESULTS SCREEN
+   DOM Manipulation: hidden until quiz ends
+   Effects & Animations: fadeIn used to reveal it
+============================================= */
+#resultsScreen {
+  display: none;
+  text-align: center;
+}
+
+#resultsScreen h2 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+/* DOM Manipulation: score text set by jQuery */
+.big-score {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #f5e642, #ff6b35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 1rem 0;
+}
+
+.result-msg {
+  color: #71717a;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.action-btn {
+  background: #fafafa;
+  color: #09090b;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s;
+}
+
+.action-btn:hover {
+  background: #e4e4e7;
+}

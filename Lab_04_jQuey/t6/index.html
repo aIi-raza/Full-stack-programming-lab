@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 6 – API Data Fetcher</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Post Fetcher</h1>
+    <p class="subtitle">Task 06 — Ajax · DOM Manipulation · Event Handling</p>
+
+    <div class="toolbar">
+      <!-- =============================================
+           LOAD BUTTON
+           Triggers the first Ajax call to fetch posts
+           (Used in: Ajax, Event Handling)
+           GOAL: Fetch API data dynamically
+      ============================================= -->
+      <button id="loadBtn">Load Posts</button>
+
+      <!-- =============================================
+           LOAD MORE BUTTON
+           Loads the next batch of posts
+           (Used in: Ajax / DOM Manipulation, Event Handling)
+           GOAL: "Load More" button to fetch additional data
+      ============================================= -->
+      <button id="loadMoreBtn">Load More</button>
+
+      <!-- Status text updated by jQuery (DOM Manipulation) -->
+      <span id="status">Ready.</span>
+    </div>
+
+    <!-- Loading spinner shown during Ajax request (DOM Manipulation) -->
+    <div id="loader">
+      <div class="spinner"></div>
+      <p>Fetching from API...</p>
+    </div>
+
+    <!-- =============================================
+         POST LIST
+         Posts are appended here dynamically by jQuery
+         (Used in: DOM Manipulation)
+         GOAL: Display fetched data in formatted list
+    ============================================= -->
+    <ul id="postList"></ul>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

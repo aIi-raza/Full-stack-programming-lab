@@ -1,0 +1,144 @@
+/* =============================================
+   TASK 7 - Drag & Drop Sortable List
+   CSS Manipulation: .dragging and .drag-over
+   classes added/removed by jQuery during drag
+   DOM Manipulation: item order updated after drop
+   Event Handling: drag events handled by jQuery
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 520px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #e2e8f0;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  font-size: 0.72rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 1.8rem;
+}
+
+/* ---- Sortable List Items ---- */
+#sortList {
+  list-style: none;
+}
+
+#sortList li {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.5rem;
+  cursor: grab;
+  user-select: none;
+  border-radius: 3px;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+#sortList li:hover {
+  background: #273549;
+  border-color: #4f6690;
+}
+
+/* CSS Manipulation: Added by jQuery when item is being dragged */
+/* Requirement: Highlight the dragged item */
+#sortList li.dragging {
+  opacity: 0.4;
+  cursor: grabbing;
+}
+
+/* CSS Manipulation: Added by jQuery when an item is a drop target */
+/* Requirement: Visual feedback for drop target */
+#sortList li.drag-over {
+  background: #1a3a5f;
+  border-color: #38bdf8;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.3);
+}
+
+.drag-handle {
+  color: #475569;
+  font-size: 1rem;
+  cursor: grab;
+}
+
+/* DOM Manipulation: jQuery updates these numbers after each drop */
+.item-num {
+  font-size: 0.7rem;
+  color: #475569;
+  font-weight: 700;
+  min-width: 18px;
+}
+
+.item-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.item-badge {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Order Display ---- */
+/* DOM Manipulation: text updated by jQuery after each drop */
+#orderDisplay {
+  margin-top: 1.5rem;
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 1rem 1.2rem;
+  border-radius: 3px;
+}
+
+#orderDisplay p {
+  font-size: 0.7rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+#orderList {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.8;
+}

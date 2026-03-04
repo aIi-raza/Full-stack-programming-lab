@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 4 – Tabbed Content with Smooth Scroll</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <header>
+    <h1>Web Dev Guide</h1>
+    <p class="subtitle">Task 04 — DOM Manipulation · Effects & Animations · Event Handling</p>
+  </header>
+
+  <!-- =============================================
+       TAB NAVIGATION BAR
+       Clicking a tab switches the visible content
+       section and scrolls to it smoothly
+       (Used in: Event Handling, DOM Manipulation)
+  ============================================= -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-target="tab-html">HTML</button>
+    <button class="tab-btn" data-target="tab-css">CSS</button>
+    <button class="tab-btn" data-target="tab-js">JavaScript</button>
+    <button class="tab-btn" data-target="tab-jquery">jQuery</button>
+    <button class="tab-btn" data-target="tab-ajax">Ajax</button>
+  </div>
+
+  <!-- =============================================
+       CONTENT SECTIONS (5 tabs as required)
+       Each section is hidden by default.
+       jQuery shows the matching section on tab click.
+       (Used in: DOM Manipulation, Effects & Animations)
+       GOAL: Switch tabs, smooth scroll to section,
+             animate content display
+  ============================================= -->
+
+  <section class="tab-section active" id="tab-html">
+    <span class="tag">Tab 01</span>
+    <h2>HTML — Structure</h2>
+    <p>HTML (HyperText Markup Language) is the backbone of every web page. It defines the structure and meaning of content using a system of elements and tags.</p>
+    <ul>
+      <li>Uses tags like &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;, &lt;a&gt;</li>
+      <li>Semantic elements: &lt;header&gt;, &lt;nav&gt;, &lt;section&gt;, &lt;footer&gt;</li>
+      <li>Forms, tables, media embedding</li>
+      <li>HTML5 introduced canvas, video, audio</li>
+    </ul>
+  </section>
+
+  <section class="tab-section" id="tab-css">
+    <span class="tag">Tab 02</span>
+    <h2>CSS — Style</h2>
+    <p>CSS (Cascading Style Sheets) controls the visual presentation of HTML documents. It separates content from design, making websites beautiful and responsive.</p>
+    <ul>
+      <li>Selectors: class, ID, pseudo-elements</li>
+      <li>Box model: margin, border, padding, content</li>
+      <li>Flexbox and CSS Grid for layouts</li>
+      <li>Animations and transitions</li>
+    </ul>
+  </section>
+
+  <section class="tab-section" id="tab-js">
+    <span class="tag">Tab 03</span>
+    <h2>JavaScript — Behaviour</h2>
+    <p>JavaScript adds interactivity to web pages. It runs in the browser and can manipulate HTML and CSS dynamically, handle events, and communicate with servers.</p>
+    <ul>
+      <li>Variables, functions, loops, conditionals</li>
+      <li>DOM API for element selection and modification</li>
+      <li>ES6+: arrow functions, classes, promises</li>
+      <li>Async/Await for asynchronous operations</li>
+    </ul>
+  </section>
+
+  <section class="tab-section" id="tab-jquery">
+    <span class="tag">Tab 04</span>
+    <h2>jQuery — Simplicity</h2>
+    <p>jQuery is a fast, lightweight JavaScript library that simplifies HTML DOM traversal, event handling, animations, and Ajax with a simple API.</p>
+    <ul>
+      <li>Cross-browser compatible selectors</li>
+      <li>Built-in animation methods: fadeIn, slideToggle</li>
+      <li>Method chaining for concise code</li>
+      <li>Plugin ecosystem for extended functionality</li>
+    </ul>
+  </section>
+
+  <section class="tab-section" id="tab-ajax">
+    <span class="tag">Tab 05</span>
+    <h2>Ajax — Communication</h2>
+    <p>Ajax (Asynchronous JavaScript and XML) enables web pages to fetch data from a server in the background without refreshing the page.</p>
+    <ul>
+      <li>$.ajax(), $.get(), $.post() in jQuery</li>
+      <li>JSON is the modern data format of choice</li>
+      <li>RESTful APIs return data for consumption</li>
+      <li>Fetch API is the modern native alternative</li>
+    </ul>
+  </section>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

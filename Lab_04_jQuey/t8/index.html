@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 8 – Quiz Game</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="quiz-box">
+
+    <!-- =============================================
+         START SCREEN
+         Shown on page load; hidden when quiz starts
+         (Used in: DOM Manipulation, Event Handling)
+    ============================================= -->
+    <div id="startScreen">
+      <h1>Quiz Time</h1>
+      <p>Task 08 — Test your web development knowledge<br>6 questions · Multiple choice</p>
+      <button class="action-btn" id="startBtn">Start Quiz →</button>
+    </div>
+
+    <!-- =============================================
+         QUIZ SCREEN
+         Hidden by default; shown when quiz starts
+         (Used in: DOM Manipulation, Effects & Animations,
+                   Event Handling, CSS Manipulation)
+         GOAL: Navigate questions, track answers,
+               display score with animation
+    ============================================= -->
+    <div id="quizScreen">
+
+      <!-- Progress Bar (DOM Manipulation: width updated per question) -->
+      <div class="progress-bar-wrap">
+        <div id="progressBar"></div>
+      </div>
+
+      <!-- Question metadata (DOM Manipulation: updated per question) -->
+      <div class="q-meta">
+        <span class="q-num" id="qNum">Question 1 / 6</span>
+        <span class="q-score" id="scoreDisplay">Score: 0</span>
+      </div>
+
+      <!-- Question text (DOM Manipulation: changed per question) -->
+      <div id="questionText"></div>
+
+      <!-- =============================================
+           OPTIONS CONTAINER
+           Answer buttons generated dynamically by jQuery
+           (Used in: DOM Manipulation, Event Handling)
+      ============================================= -->
+      <div class="options" id="optionsContainer"></div>
+
+      <!-- Feedback text (DOM Manipulation: shown after answering) -->
+      <div id="feedback"></div>
+
+      <!-- Next / See Results button (DOM Manipulation + Event Handling) -->
+      <button id="nextBtn">Next →</button>
+    </div>
+
+    <!-- =============================================
+         RESULTS SCREEN
+         Hidden until quiz ends; shown with animation
+         (Used in: DOM Manipulation, Effects & Animations)
+         GOAL: Display score with animation at end
+    ============================================= -->
+    <div id="resultsScreen">
+      <h2>Quiz Complete!</h2>
+      <!-- DOM Manipulation: score updated by jQuery -->
+      <div class="big-score" id="finalScore">0/6</div>
+      <p class="result-msg" id="resultMsg"></p>
+      <button class="action-btn" id="retryBtn">↺ Play Again</button>
+    </div>
+
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 2 – Animated Image Gallery</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="gallery-wrap">
+    <h1>Image Gallery</h1>
+    <p class="subtitle">Task 02 — Effects & Animations · DOM Manipulation · Chaining</p>
+
+    <!-- =============================================
+         GALLERY FRAME
+         Images are stacked here; only one is visible
+         at a time. jQuery fades them in/out.
+         (Used in: Effects & Animations, DOM Manipulation)
+    ============================================= -->
+    <div class="gallery-frame">
+      <img src="https://picsum.photos/seed/arch1/680/380" class="active" alt="Slide 1"/>
+      <img src="https://picsum.photos/seed/arch2/680/380" alt="Slide 2"/>
+      <img src="https://picsum.photos/seed/arch3/680/380" alt="Slide 3"/>
+      <img src="https://picsum.photos/seed/arch4/680/380" alt="Slide 4"/>
+      <img src="https://picsum.photos/seed/arch5/680/380" alt="Slide 5"/>
+    </div>
+
+    <!-- =============================================
+         CAPTION BAR
+         Updated dynamically by jQuery (DOM Manipulation)
+         Fades out and in with each slide change (Chaining)
+    ============================================= -->
+    <div class="caption-bar">
+      <span id="caption">Loading...</span>
+      <span id="slideCounter">1 / 5</span>
+    </div>
+
+    <!-- =============================================
+         NAVIGATION CONTROLS
+         Prev/Next buttons trigger slide transitions
+         (Used in: Event Handling)
+    ============================================= -->
+    <div class="controls">
+      <button class="ctrl-btn" id="prevBtn">← Prev</button>
+      <button class="ctrl-btn" id="nextBtn">Next →</button>
+    </div>
+
+    <!-- Dot indicators (DOM Manipulation: created by jQuery) -->
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

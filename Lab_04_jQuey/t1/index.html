@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 1 – Dynamic List Manager</title>
+
+  <!-- jQuery CDN (required for all jQuery features) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="container">
+    <h1>List Manager</h1>
+    <p class="subtitle">Task 01 — DOM Manipulation · Event Handling · CSS Manipulation</p>
+
+    <!-- =============================================
+         INPUT AREA
+         Users type a new item here and click Add
+         (Used in: DOM Manipulation, Event Handling)
+    ============================================= -->
+    <div class="input-row">
+      <input type="text" id="itemInput" placeholder="Type an item..." />
+      <button id="addBtn">+ Add</button>
+    </div>
+
+    <!-- Item counter display (DOM Manipulation) -->
+    <div class="counter">Items: <span id="count">0</span></div>
+
+    <!-- =============================================
+         LIST CONTAINER
+         Items are dynamically added/removed here
+         (Used in: DOM Manipulation)
+    ============================================= -->
+    <ul id="itemList"></ul>
+
+    <!-- Shown when list is empty (DOM Manipulation) -->
+    <p id="emptyMsg">No items yet. Add something above.</p>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

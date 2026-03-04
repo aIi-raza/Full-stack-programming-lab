@@ -1,0 +1,165 @@
+/* =============================================
+   TASK 6 - API Data Fetcher
+   Ajax: Data is fetched from external API
+   DOM Manipulation: Post items built and appended
+   Event Handling: Load / Load More button clicks
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: #f4f4f0;
+  color: #1a1a1a;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+/* ---- Toolbar ---- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Event Handling: these buttons trigger Ajax calls */
+#loadBtn, #loadMoreBtn {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#loadBtn:hover, #loadMoreBtn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* Load More has a secondary style */
+#loadMoreBtn {
+  background: #e8e8e0;
+  color: #1a1a1a;
+  border: 1px solid #ccc;
+}
+
+#loadMoreBtn:hover {
+  background: #ddd;
+}
+
+/* DOM Manipulation: hidden by default, shown after first load */
+#loadMoreBtn {
+  display: none;
+}
+
+/* DOM Manipulation: status text updated by jQuery */
+#status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* ---- Post List ---- */
+#postList {
+  list-style: none;
+}
+
+/* DOM Manipulation: each post item is created and appended by jQuery */
+.post-item {
+  background: #fff;
+  border: 1px solid #e0e0d8;
+  border-left: 3px solid #1a1a1a;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.6rem;
+  display: none; /* Hidden initially; jQuery slideDown animates them in */
+}
+
+.post-item:nth-child(odd) {
+  border-left-color: #888;
+}
+
+.post-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: #aaa;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.post-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  margin-bottom: 0.3rem;
+  text-transform: capitalize;
+}
+
+.post-body {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ---- Loading Spinner ---- */
+/* DOM Manipulation: shown/hidden during Ajax request */
+#loader {
+  text-align: center;
+  padding: 2rem;
+  display: none;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e0e0d8;
+  border-top-color: #1a1a1a;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+#loader p {
+  font-size: 0.8rem;
+  color: #888;
+  font-family: 'IBM Plex Mono', monospace;
+}

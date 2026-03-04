@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 7 – Drag & Drop Sortable List</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="wrap">
+    <h1>Sort It</h1>
+    <p class="subtitle">Task 07 — DOM Manipulation · Event Handling · CSS Manipulation</p>
+    <p class="hint">🖱 Drag items to reorder them</p>
+
+    <!-- =============================================
+         SORTABLE LIST
+         Each item has draggable="true" to enable
+         HTML5 drag-and-drop events, handled by jQuery
+         (Used in: DOM Manipulation, Event Handling, CSS Manipulation)
+         GOAL: Enable drag-and-drop, highlight dragged item,
+               update order dynamically
+    ============================================= -->
+    <ul id="sortList">
+      <li draggable="true" data-id="1">
+        <span class="drag-handle">⠿</span>
+        <span class="item-num">1</span>
+        <span class="item-label">HTML — Structure</span>
+        <span class="item-badge" style="background:#7c3d12;color:#fed7aa">Foundation</span>
+      </li>
+      <li draggable="true" data-id="2">
+        <span class="drag-handle">⠿</span>
+        <span class="item-num">2</span>
+        <span class="item-label">CSS — Styling</span>
+        <span class="item-badge" style="background:#1e3a5f;color:#bae6fd">Design</span>
+      </li>
+      <li draggable="true" data-id="3">
+        <span class="drag-handle">⠿</span>
+        <span class="item-num">3</span>
+        <span class="item-label">JavaScript — Logic</span>
+        <span class="item-badge" style="background:#713f12;color:#fef08a">Behaviour</span>
+      </li>
+      <li draggable="true" data-id="4">
+        <span class="drag-handle">⠿</span>
+        <span class="item-num">4</span>
+        <span class="item-label">jQuery — Simplicity</span>
+        <span class="item-badge" style="background:#14532d;color:#bbf7d0">Library</span>
+      </li>
+      <li draggable="true" data-id="5">
+        <span class="drag-handle">⠿</span>
+        <span class="item-num">5</span>
+        <span class="item-label">Ajax — Communication</span>
+        <span class="item-badge" style="background:#3b0764;color:#e9d5ff">Async</span>
+      </li>
+    </ul>
+
+    <!-- =============================================
+         ORDER DISPLAY
+         Shows current list order — updated dynamically
+         (Used in: DOM Manipulation)
+         GOAL: Update order dynamically after drop
+    ============================================= -->
+    <div id="orderDisplay">
+      <p>Current Order</p>
+      <div id="orderList"></div>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
+</body>
+</html>

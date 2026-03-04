@@ -1,0 +1,167 @@
+/* =============================================
+   TASK 1 - Dynamic List Manager
+   CSS Manipulation: Styles for hover highlight,
+   error state on empty input, and list items
+   are controlled here and toggled via jQuery
+============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: #0d0d0d;
+  color: #e8e2d4;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 560px;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #f5e642;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+
+/* ---- Input Area ---- */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#itemInput {
+  flex: 1;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e8e2d4;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#itemInput:focus {
+  border-color: #f5e642;
+}
+
+/* CSS Manipulation: Error state applied by jQuery when input is empty */
+#itemInput.input-error {
+  border-color: #ff4d4d;
+  background: #1f1010;
+}
+
+#addBtn {
+  background: #f5e642;
+  color: #0d0d0d;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#addBtn:hover {
+  background: #ffe800;
+  transform: scale(1.03);
+}
+
+#addBtn:active {
+  transform: scale(0.97);
+}
+
+/* ---- Counter ---- */
+.counter {
+  font-size: 0.75rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+.counter span {
+  color: #f5e642;
+}
+
+/* ---- List Items ---- */
+#itemList {
+  list-style: none;
+}
+
+#itemList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #161616;
+  border: 1px solid #222;
+  /* CSS Manipulation: Left border changes color on hover (jQuery toggles .hovered or CSS :hover) */
+  border-left: 3px solid #333;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  transition: border-left-color 0.2s, background 0.2s;
+  cursor: default;
+}
+
+/* CSS Manipulation: Hover highlight on list items (GOAL requirement) */
+#itemList li:hover {
+  border-left-color: #f5e642;
+  background: #1e1e1e;
+}
+
+.item-text {
+  font-size: 0.95rem;
+}
+
+/* ---- Delete Button ---- */
+.delete-btn {
+  background: none;
+  border: 1px solid #333;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.delete-btn:hover {
+  background: #ff4d4d;
+  color: #fff;
+  border-color: #ff4d4d;
+}
+
+/* ---- Empty Message ---- */
+#emptyMsg {
+  color: #444;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 2rem 0;
+}
