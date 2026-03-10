@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail | HotSpring Portable Spas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="hs-topbar">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <span>Call for Customer support: <a href="tel:02038989565">020 38989565</a></span>
+        <div class="top-links">
+          <a href="login.html">Sign In</a>
+          <a href="register.html">Register</a>
+          <a href="#">Wishlist</a>
+          <a href="../pages/cart.html">To Checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- HEADER -->
+  <header class="hs-header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="../index.html" class="logo-brand text-decoration-none">
+          <div class="brand-name">HOTSPRING<sup style="font-size:14px">®</sup></div>
+          <div class="brand-sub">Portable Spas</div>
+        </a>
+        <a href="../pages/cart.html" class="cart-btn text-decoration-none">
+          <i class="fas fa-shopping-cart"></i>
+          <span>My Cart:</span>
+          <span class="cart-badge">0</span>
+          <span class="cart-items-lbl">Items</span>
+          <i class="fas fa-chevron-down" style="font-size:10px"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+  <!-- MAIN NAV -->
+  <nav class="hs-mainnav">
+    <div class="container">
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="../index.html">HOME</a></li>
+        <li class="nav-item"><a class="nav-link active" href="../pages/category.html">PRODUCTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="../pages/category.html?search=special">SPECIAL OFFERS</a></li>
+        <li class="nav-item"><a class="nav-link" href="../pages/contact.html">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- RED NAV -->
+  <div class="hs-rednav">
+    <div class="container d-flex align-items-center">
+      <div>
+        <a href="../pages/category.html" class="rn-link">CATEGORY</a>
+        <a href="../pages/category.html" class="rn-link">BRAND</a>
+        <a href="../pages/about.html" class="rn-link">INFO</a>
+      </div>
+      <div class="search-wrap">
+        <input type="text" class="hs-search-input" placeholder="Search">
+        <button class="hs-search-btn">SEARCH</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hs-breadcrumb mt-2">
+      <a href="../index.html">Home</a><span class="sep">›</span>
+      <a href="category.html">Category</a><span class="sep">›</span>
+      <span id="pd-name-bc">Product</span>
+    </div>
+
+    <div class="page-box" id="product-detail">
+      <h1 id="pd-name" class="pd-name"></h1>
+      <p id="pd-model" class="pd-model"></p>
+
+      <div class="pd-grid">
+        <!-- IMAGES -->
+        <div>
+          <div class="pd-main-img">
+            <div
+              style="width:200px;height:200px;background:linear-gradient(135deg,#0d3b5e,#1a6fa3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:80px;color:rgba(255,255,255,.8)">
+              ♨</div>
+          </div>
+          <div class="thumb-strip">
+            <div class="thumb-item active">♨</div>
+            <div class="thumb-item">🛁</div>
+            <div class="thumb-item">💧</div>
+            <div class="thumb-item">⚡</div>
+          </div>
+          <p class="mt-2" style="font-size:11px;color:var(--red);cursor:pointer">+ Larger View</p>
+
+          <div class="downloads-box mt-3">
+            <h6 style="font-weight:700;font-size:14px;margin-bottom:8px">Download Resources</h6>
+            <a href="#"><i class="fas fa-file-pdf" style="color:var(--red)"></i> Full Line Brochure</a>
+            <a href="#"><i class="fas fa-file-pdf" style="color:var(--red)"></i> Owner's Manual</a>
+            <a href="#"><i class="fas fa-file-pdf" style="color:var(--red)"></i> Specifications Sheet</a>
+          </div>
+        </div>
+
+        <!-- PRODUCT INFO -->
+        <div>
+          <div class="stars-row mb-1">
+            <span id="pd-stars" style="color:#f0a800"></span>
+            <a id="pd-reviews" class="review-link" href="#tab-reviews"></a>
+          </div>
+          <div class="price-retail" id="pd-retail"></div>
+          <div class="price-sale" id="pd-sale"></div>
+          <div class="low-price-tag mb-2">Low Price Guarantee</div>
+
+          <table class="spec-tbl mb-3">
+            <tr>
+              <td>Size/Seating Capacity</td>
+              <td id="pd-capacity"></td>
+            </tr>
+            <tr>
+              <td>Seating Design</td>
+              <td>Bucket, Lounge, Chair, Bench</td>
+            </tr>
+            <tr>
+              <td>Water Capacity / Dry Weight</td>
+              <td id="pd-gallons"></td>
+            </tr>
+            <tr>
+              <td>Number of Pumps</td>
+              <td id="pd-pumps"></td>
+            </tr>
+            <tr>
+              <td>Electrical</td>
+              <td id="pd-voltage"></td>
+            </tr>
+            <tr>
+              <td>Total Jets</td>
+              <td id="pd-jets"></td>
+            </tr>
+          </table>
+
+          <div class="badge-instock">In Stock (available)</div><br>
+          <button id="pd-add-cart" class="btn-cart mt-2" data-id="2" style="max-width:180px">
+            <i class="fas fa-shopping-cart"></i> ADD TO CART
+          </button>
+        </div>
+
+        <!-- PRICE CALCULATOR -->
+        <div class="price-calc-box">
+          <h5>Price Calculator</h5>
+          <input type="hidden" id="calc-base" value="650">
+          <div class="calc-row"><label>Interior Color:</label><select onchange="calcUpdate()">
+              <option value="0">Standard</option>
+              <option value="50">Premium (+$50)</option>
+            </select></div>
+          <div class="calc-row"><label>Outside Shell Color:</label><select onchange="calcUpdate()">
+              <option value="0">Standard</option>
+              <option value="30">Custom (+$30)</option>
+            </select></div>
+          <div class="calc-row"><label>Circulation Pump:</label><select onchange="calcUpdate()">
+              <option value="0">Standard</option>
+              <option value="75">Upgraded (+$75)</option>
+            </select></div>
+          <div class="calc-row"><label>Cover / Steps:</label><select onchange="calcUpdate()">
+              <option value="0">None</option>
+              <option value="120">With Cover (+$120)</option>
+              <option value="180">Cover+Steps (+$180)</option>
+            </select></div>
+          <div class="calc-row"><label>TV/DVD:</label><select onchange="calcUpdate()">
+              <option value="0">None</option>
+              <option value="250">DVD System (+$250)</option>
+              <option value="400">Full Theater (+$400)</option>
+            </select></div>
+          <div class="calc-row"><label>Salt Water System:</label><select onchange="calcUpdate()">
+              <option value="0">No</option>
+              <option value="150">Yes (+$150)</option>
+            </select></div>
+          <div class="calc-total">Total Price: <span class="amount-display">$650.00</span></div>
+          <button id="pd-calc-cart" class="btn-cart w-100" data-id="2"><i class="fas fa-shopping-cart"></i> ADD TO
+            CART</button>
+        </div>
+      </div><!-- /pd-grid -->
+
+      <!-- TABS -->
+      <div class="prod-tabs">
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="details">Details</button>
+          <button class="tab-btn" data-tab="specs">Quick Specs</button>
+          <button class="tab-btn" data-tab="accessories">Accessories</button>
+          <button class="tab-btn" data-tab="reviews">Reviews</button>
+          <button class="tab-btn" data-tab="qa">Q &amp; A</button>
+        </div>
+        <div id="tab-details" class="tab-pane active">
+          <p id="pd-tab-desc"></p>
+          <p>Experience the ultimate relaxation with our premium hot tub technology. The ergonomically designed seating
+            provides exceptional comfort while the powerful jet system delivers therapeutic hydrotherapy. Built with
+            high-quality materials for years of enjoyment.</p>
+          <p>Our advanced filtration system ensures crystal-clear water while the energy-efficient design keeps
+            operating costs low. The intuitive control panel makes it easy to set your perfect spa experience every
+            time.</p>
+        </div>
+        <div id="tab-specs" class="tab-pane">
+          <table class="spec-tbl" style="max-width:480px">
+            <tr>
+              <td>Energy Star Rated</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Seating Design</td>
+              <td>Bucket, Lounge, Chair, Bench</td>
+            </tr>
+            <tr>
+              <td>Water Capacity</td>
+              <td id="spec-gallons"></td>
+            </tr>
+            <tr>
+              <td>Number of Pumps</td>
+              <td id="spec-pumps"></td>
+            </tr>
+            <tr>
+              <td>Electrical</td>
+              <td id="spec-voltage"></td>
+            </tr>
+            <tr>
+              <td>Total Jets</td>
+              <td id="spec-jets"></td>
+            </tr>
+            <tr>
+              <td>Warranty</td>
+              <td>5 Year Structure / 3 Year Parts</td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-accessories" class="tab-pane">
+          <p>Compatible accessories include spa steps, thermal covers, chemical starter kits, and floating thermometers.
+            Contact us for a complete accessories list for your specific model.</p>
+        </div>
+        <div id="tab-reviews" class="tab-pane">
+          <p><strong>4/5 Stars</strong> — Based on 14 reviews</p>
+          <p>"Amazing product! We use it every weekend and it has been a great investment for our family." — <em>John
+              D.</em></p>
+          <p>"Very easy to set up and maintain. The jets are powerful and adjustable." — <em>Sarah M.</em></p>
+        </div>
+        <div id="tab-qa" class="tab-pane">
+          <p><strong>Q: Is installation included?</strong><br>A: Installation is not included but most customers set it
+            up themselves with our guide.</p>
+          <p><strong>Q: What chemicals are needed?</strong><br>A: Standard bromine or chlorine spa chemicals. A starter
+            kit is available as an add-on.</p>
+        </div>
+      </div>
+    </div><!-- /page-box -->
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+  <div class="container">
+    <div class="related-section">
+      <div class="related-title">Customers Who Viewed This Item Also</div>
+      <div class="related-scroll" id="related-slider"></div>
+    </div>
+  </div>
+  <!-- BRAND BAR -->
+  <div class="container">
+    <div class="brand-bar">
+      <div class="brand-item">
+        <span
+          style="background:#f5a623;padding:10px;border-radius:4px;color:#fff;font-size:12px;text-align:center;line-height:1.4;display:block;font-weight:700;">SAVE
+          $1,000's<br><small style="font-weight:400">ON TOP SPA BRANDS</small></span>
+      </div>
+      <div class="brand-item"><span
+          style="font-style:italic;color:#1a5fa3;font-size:22px;font-weight:700;">OceanicSpa</span></div>
+      <div class="brand-item"><span style="color:#e05a3a;font-size:20px;font-weight:700;">&#10022;
+          Caldera<em>Spas</em></span></div>
+      <div class="brand-item"><span style="color:#2d8a4e;font-size:20px;font-weight:700;">🌴 Island<em>Spas</em></span>
+      </div>
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <footer class="hs-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h5>CONTACT US</h5>
+          <p>yoursitename.com<br>CALL 24/7: 888 - 201 - 8899<br>Your Address: Street<br>State &amp; Zip Code<br>City
+            &amp; Country<br>Email: servicemail@yoursitename.com</p>
+          <div class="social-row">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>INFORMATION</h5>
+          <ul class="list-unstyled">
+            <li><a href="about.html">ABOUT US</a></li>
+            <li><a href="contact.html">CUSTOMER SERVICE</a></li>
+            <li><a href="#">PRIVACY POLICY</a></li>
+            <li><a href="#">SITE MAP</a></li>
+            <li><a href="#">SEARCH TERMS</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>MY ACCOUNT</h5>
+          <ul class="list-unstyled">
+            <li><a href="login.html">SIGN IN</a></li>
+            <li><a href="cart.html">VIEW CART</a></li>
+            <li><a href="#">MY WISHLIST</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>SIGNUP FOR A NEWSLETTER</h5>
+          <p style="font-size:11px;margin-bottom:8px;">SIGN UP FOR OUR NEWSLETTER:</p>
+          <input type="email" class="footer-input" placeholder="Your email address">
+          <button class="btn-hs btn-red w-100 newsletter-btn">Subscribe</button>
+          <p style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:11px;">PAYMENT SOLUTIONS</p>
+          <div class="pay-icons">
+            <span class="pay-icon">VISA</span>
+            <span class="pay-icon">MC</span>
+            <span class="pay-icon">AMEX</span>
+            <span class="pay-icon">PayPal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2014 Hotubspaservice.com. All Rights Reserved.</div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    function calcUpdate() {
+      var base = parseFloat(document.getElementById('calc-base').value || 0);
+      var extra = Array.from(document.querySelectorAll('.calc-row select')).reduce(function (s, el) { return s + parseFloat(el.value || 0); }, 0);
+      document.querySelector('.amount-display').textContent = '$' + (base + extra).toFixed(2);
+    }
+  </script>
+</body>
+
+</html>
