@@ -1,0 +1,51 @@
+/* Counter.css - Styles for the Counter component */
+
+.counter-container {
+  padding: 30px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.count-display {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Base button style */
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.increment-btn {
+  background-color: #28a745;
+}
+
+.decrement-btn {
+  background-color: #dc3545;
+}
+
+.reset-btn {
+  background-color: #6c757d;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.info-text {
+  margin-top: 15px;
+  color: #888;
+  font-style: italic;
+}

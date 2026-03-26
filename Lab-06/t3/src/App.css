@@ -1,0 +1,13 @@
+/* App.css - Basic styles for the Event App */
+
+.App {
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+h1 {
+  margin-bottom: 20px;
+}

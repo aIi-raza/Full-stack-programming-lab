@@ -1,0 +1,75 @@
+/* Products.css - Styles for the Products page */
+
+.products-header {
+  margin-bottom: 24px;
+}
+
+.cart-badge {
+  display: inline-block;
+  margin-top: 12px;
+  background-color: #1a1a2e;
+  color: #4ecca3;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+/* Two-column grid for product cards */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 4px solid #4ecca3;
+}
+
+.product-card h3 {
+  font-size: 1.05rem;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.product-card p {
+  font-size: 14px;
+  color: #666;
+  flex: 1;
+}
+
+/* Footer row: price left, button right */
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.cart-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #4ecca3;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.cart-btn:hover {
+  opacity: 0.8;
+}

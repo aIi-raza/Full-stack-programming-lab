@@ -1,0 +1,80 @@
+/* Actions.css - Styles for the Actions component */
+
+.actions-container {
+  padding: 30px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  display: inline-block;
+  min-width: 400px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Base button style */
+.btn {
+  padding: 12px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.message-btn {
+  background-color: #17a2b8;
+}
+
+.bg-btn {
+  background-color: #28a745;
+}
+
+.alert-btn {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.message-display {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: default;
+  transition: color 0.2s ease;
+}
+
+.hint-text {
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+.info-section {
+  margin-top: 25px;
+  text-align: left;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.info-section h3 {
+  margin-top: 0;
+}
+
+.info-section ul {
+  padding-left: 20px;
+}
+
+.info-section li {
+  margin-bottom: 5px;
+}

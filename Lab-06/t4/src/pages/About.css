@@ -1,0 +1,60 @@
+/* About.css - Styles for the About page */
+
+.about-banner {
+  background: linear-gradient(135deg, #16213e, #0f3460);
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.about-banner h1 {
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.about-banner p {
+  color: #cccccc;
+  margin-bottom: 0;
+}
+
+.about-content {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 30px 40px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+/* Concepts section */
+.concepts-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.concepts-list li {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  background-color: #f0faf6;
+  border-radius: 6px;
+  border-left: 4px solid #4ecca3;
+  color: #333;
+}
+
+/* Tech badges */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.tech-badges li {
+  background-color: #1a1a2e;
+  color: #4ecca3;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}

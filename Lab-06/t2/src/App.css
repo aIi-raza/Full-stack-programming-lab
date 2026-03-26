@@ -1,0 +1,11 @@
+/* App.css - Basic styles for the User Form App */
+
+.App {
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
