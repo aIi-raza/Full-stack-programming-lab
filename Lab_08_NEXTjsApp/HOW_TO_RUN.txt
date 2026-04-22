@@ -1,0 +1,57 @@
+====================================================
+  Lab_08_NEXTjsApp — How to Run
+====================================================
+
+REQUIREMENTS (install once on your machine):
+  - Node.js LTS: https://nodejs.org/en/download
+  - Verify: open terminal and run:
+      node -v
+      npm -v
+
+----------------------------------------------------
+  TASK 1 — Multi-Page App (Home, About, Contact)
+----------------------------------------------------
+
+Step 1: Open terminal and navigate to the t1 folder
+    cd Lab_08_NEXTjsApp/t1
+
+Step 2: Install dependencies
+    npm install
+
+Step 3: Start the development server
+    npm run dev
+
+Step 4: Open your browser and visit:
+    http://localhost:3000        → Home page
+    http://localhost:3000/about  → About page
+    http://localhost:3000/contact → Contact page
+
+----------------------------------------------------
+  TASK 2 — Dynamic Component (Products + Detail Page)
+----------------------------------------------------
+
+Step 1: Open terminal and navigate to the t2 folder
+    cd Lab_08_NEXTjsApp/t2
+
+    NOTE: If t1 is already running, either stop it first
+    (press Ctrl+C) or run t2 on a different port:
+    npx next dev -p 3001
+
+Step 2: Install dependencies
+    npm install
+
+Step 3: Start the development server
+    npm run dev
+
+Step 4: Open your browser and visit:
+    http://localhost:3000           → Home page
+    http://localhost:3000/products  → All Products (ProductList)
+    http://localhost:3000/products/1 → Product detail (ID 1)
+    http://localhost:3000/products/2 → Product detail (ID 2)
+    http://localhost:3000/products/3 → Product detail (ID 3)
+    http://localhost:3000/products/4 → Product detail (ID 4)
+
+----------------------------------------------------
+  STOP the server:
+    Press Ctrl + C in the terminal
+====================================================
