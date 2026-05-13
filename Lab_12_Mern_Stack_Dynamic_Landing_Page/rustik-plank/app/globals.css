@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Oswald', sans-serif;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-xs font-semibold uppercase tracking-wide text-gray-700 hover:text-brand-orange transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-brand-orange text-white px-5 py-2 text-sm font-semibold uppercase hover:bg-orange-700 transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border border-gray-400 text-gray-600 px-4 py-1 text-xs uppercase hover:border-brand-orange hover:text-brand-orange transition-colors duration-200;
+  }
+
+  .section-title {
+    @apply font-heading text-2xl font-bold uppercase tracking-widest;
+  }
+
+  .product-card {
+    @apply flex items-center gap-3 py-3 border-b border-gray-100 last:border-0;
+  }
+
+  .price-orange {
+    @apply text-brand-orange font-bold text-sm;
+  }
+
+  .price-gray-line {
+    @apply text-gray-400 line-through text-xs;
+  }
+}
+
+/* Hero orange wave */
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, transparent 49%, #E07B20 50%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #E07B20;
+}
