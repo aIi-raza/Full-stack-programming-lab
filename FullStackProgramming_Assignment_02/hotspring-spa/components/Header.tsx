@@ -1,74 +1,105 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useStore } from "@/lib/store";
 
 export default function Header() {
+  const { cartCount, user, logout } = useStore();
   const [search, setSearch] = useState("");
+  const router = useRouter();
+
+  function doSearch() {
+    if (!search.trim()) return;
+    router.push(`/category?search=${encodeURIComponent(search.trim())}`);
+    setSearch("");
+  }
 
   return (
     <header>
-      {/* Top bar */}
-      <div style={{ backgroundColor: "#f5f5f5", borderBottom: "1px solid #ddd", padding: "4px 0" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-          <span>Call for Customer support: <span style={{ color: "#cc0000", fontWeight: "bold" }}>020 38989565</span></span>
-          <div style={{ display: "flex", gap: 16 }}>
-            <Link href="/account" style={{ color: "#333" }}>My Account</Link>
-            <Link href="/wishlist" style={{ color: "#333" }}>Wishlist</Link>
-            <Link href="/checkout/payment" style={{ color: "#333" }}>To Checkout</Link>
+      {/* TOP BAR */}
+      <div className="hs-topbar">
+        <div className="hs-container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span>
+              Call for Customer support:{" "}
+              <a href="tel:02038989565">020 38989565</a>
+            </span>
+            <div className="top-links">
+              {user ? (
+                <>
+                  <Link href="/account">My Account</Link>
+                  <button
+                    onClick={logout}
+                    style={{ background: "none", border: "none", color: "#bbb", fontSize: 12, cursor: "pointer", marginLeft: 18 }}
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login">Sign In</Link>
+                  <Link href="/register">Register</Link>
+                </>
+              )}
+              <Link href="#">Wishlist</Link>
+              <Link href="/cart">To Checkout</Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Logo + Cart bar */}
-      <div style={{ backgroundColor: "white", padding: "10px 0", borderBottom: "1px solid #ddd" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Link href="/">
-            <div>
-              <span style={{ fontSize: 32, fontWeight: 900, color: "#222", fontFamily: "Georgia, serif", letterSpacing: -1 }}>HotSpring</span>
-              <span style={{ fontSize: 11, display: "block", color: "#cc0000", fontStyle: "italic" }}>Portable Spas</span>
-            </div>
-          </Link>
-          <Link href="/cart" style={{ display: "flex", alignItems: "center", gap: 8, color: "#333", fontSize: 13 }}>
-            <span style={{ backgroundColor: "#cc0000", color: "white", padding: "4px 10px", fontSize: 12 }}>🛒 My Cart: 0 Items</span>
-          </Link>
+      {/* HEADER — Logo + Cart */}
+      <div className="hs-header">
+        <div className="hs-container">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Link href="/" style={{ lineHeight: 1 }}>
+              <div className="brand-name">
+                HOTSPRING<sup style={{ fontSize: 14 }}>®</sup>
+              </div>
+              <div className="brand-sub">Portable Spas</div>
+            </Link>
+            <Link href="/cart" className="cart-btn">
+              <span>🛒</span>
+              <span>My Cart:</span>
+              <span className="cart-badge">{cartCount}</span>
+              <span>{cartCount !== 1 ? "Items" : "Item"}</span>
+              <span style={{ fontSize: 10 }}>▼</span>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Main nav */}
-      <div style={{ backgroundColor: "white", borderBottom: "2px solid #cc0000" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px" }}>
-          <nav style={{ display: "flex", gap: 24, fontSize: 13 }}>
-            {[
-              { label: "HOME", href: "/" },
-              { label: "PRODUCTS", href: "/category" },
-              { label: "SPECIAL OFFERS", href: "/category?sale=true" },
-              { label: "CONTACT", href: "/contact" },
-            ].map((item) => (
-              <Link key={item.href} href={item.href} style={{ padding: "10px 0", display: "inline-block", color: "#555", borderBottom: "2px solid transparent" }}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+      {/* MAIN NAV */}
+      <nav className="hs-mainnav">
+        <div className="hs-container">
+          <div style={{ display: "flex" }}>
+            <Link href="/" className="nav-link">HOME</Link>
+            <Link href="/category" className="nav-link">PRODUCTS</Link>
+            <Link href="/category?search=special" className="nav-link">SPECIAL OFFERS</Link>
+            <Link href="/contact" className="nav-link">CONTACT</Link>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Red search bar */}
-      <div style={{ backgroundColor: "#cc0000", padding: "6px 0" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ display: "flex", gap: 0, fontSize: 13 }}>
-            <Link href="/category" style={{ color: "white", padding: "4px 14px", borderRight: "1px solid rgba(255,255,255,0.4)" }}>CATAGORY</Link>
-            <Link href="/category?brand=true" style={{ color: "white", padding: "4px 14px", borderRight: "1px solid rgba(255,255,255,0.4)" }}>BRAND</Link>
-            <Link href="/about" style={{ color: "white", padding: "4px 14px" }}>INFO</Link>
+      {/* RED NAV + SEARCH */}
+      <div className="hs-rednav">
+        <div className="hs-container" style={{ display: "flex", alignItems: "center" }}>
+          <div>
+            <Link href="/category" className="rn-link">CATEGORY</Link>
+            <Link href="/category" className="rn-link">BRAND</Link>
+            <Link href="/about" className="rn-link">INFO</Link>
           </div>
           <div style={{ flex: 1, display: "flex" }}>
             <input
               type="text"
+              className="hs-search-input"
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              style={{ flex: 1, padding: "5px 10px", border: "none", fontSize: 13 }}
+              onKeyDown={(e) => e.key === "Enter" && doSearch()}
             />
-            <button style={{ backgroundColor: "#444", color: "white", padding: "5px 16px", border: "none", cursor: "pointer", fontSize: 13 }}>
+            <button className="hs-search-btn" onClick={doSearch}>
               SEARCH
             </button>
           </div>

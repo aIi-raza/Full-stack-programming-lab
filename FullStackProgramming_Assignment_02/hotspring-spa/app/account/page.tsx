@@ -1,84 +1,110 @@
+"use client";
 import Link from "next/link";
+import { useStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function MyAccountPage() {
+  const { user, orders, logout } = useStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user === null) router.push("/login");
+  }, [user, router]);
+
+  if (!user) return null;
+
+  const billing = typeof window !== "undefined"
+    ? (() => { try { return JSON.parse(localStorage.getItem("hs_billing") || "{}"); } catch { return {}; } })()
+    : {};
+  const shipping = typeof window !== "undefined"
+    ? (() => { try { return JSON.parse(localStorage.getItem("hs_shipping") || "{}"); } catch { return {}; } })()
+    : {};
+
+  const addrFmt = (a: Record<string, string>) =>
+    a.firstName ? `${a.firstName} ${a.lastName}, ${a.company || ""}, ${a.address}, ${a.city}, ${a.state} ${a.zip}, ${a.country}` : "No address saved.";
+
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; My Account
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt; My Account
       </p>
-      <h1 style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>My Account</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <h1 className="page-heading" style={{ marginBottom: 0 }}>Hello {user.firstName}!</h1>
+        <button className="btn-hs btn-dark" onClick={() => { logout(); router.push("/"); }} style={{ fontSize: 12 }}>Sign Out</button>
+      </div>
+
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, fontSize: 13 }}>
         {/* Account Info */}
-        <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 20 }}>
-          <h3 style={{ fontWeight: "bold", fontSize: 15, borderBottom: "1px solid #eee", paddingBottom: 8, marginBottom: 12 }}>Account Information</h3>
-          <p style={{ marginBottom: 4 }}><strong>John Doe</strong></p>
-          <p style={{ color: "#666", marginBottom: 12 }}>john.doe@example.com</p>
-          <Link href="/account/edit" style={{ color: "#cc0000", fontSize: 12 }}>Edit Account Information</Link>
-        </div>
-
-        {/* Orders */}
-        <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 20 }}>
-          <h3 style={{ fontWeight: "bold", fontSize: 15, borderBottom: "1px solid #eee", paddingBottom: 8, marginBottom: 12 }}>Recent Orders</h3>
-          <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ backgroundColor: "#f5f5f5" }}>
-                <th style={{ padding: "6px 8px", textAlign: "left", border: "1px solid #eee" }}>Order #</th>
-                <th style={{ padding: "6px 8px", textAlign: "left", border: "1px solid #eee" }}>Date</th>
-                <th style={{ padding: "6px 8px", textAlign: "left", border: "1px solid #eee" }}>Total</th>
-                <th style={{ padding: "6px 8px", textAlign: "left", border: "1px solid #eee" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}><Link href="/account/orders/1" style={{ color: "#cc0000" }}>100000001</Link></td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}>01/15/2024</td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}>$1,979.00</td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee", color: "green" }}>Complete</td>
-              </tr>
-              <tr>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}><Link href="/account/orders/2" style={{ color: "#cc0000" }}>100000002</Link></td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}>02/03/2024</td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee" }}>$500.00</td>
-                <td style={{ padding: "6px 8px", border: "1px solid #eee", color: "orange" }}>Pending</td>
-              </tr>
-            </tbody>
-          </table>
-          <Link href="/account/orders" style={{ color: "#cc0000", fontSize: 12, display: "block", marginTop: 8 }}>View All Orders</Link>
+        <div className="page-box">
+          <h3 style={{ fontWeight: 700, fontSize: 15, borderBottom: "1px solid var(--border)", paddingBottom: 8, marginBottom: 12 }}>Account Information</h3>
+          <p style={{ marginBottom: 4 }}><strong>{user.firstName} {user.lastName}</strong></p>
+          <p style={{ color: "#666", marginBottom: 12 }}>{user.email}</p>
+          <Link href="/account/edit" style={{ color: "var(--red)", fontSize: 12 }}>Edit Account Information</Link>
         </div>
 
         {/* Address Book */}
-        <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 20 }}>
-          <h3 style={{ fontWeight: "bold", fontSize: 15, borderBottom: "1px solid #eee", paddingBottom: 8, marginBottom: 12 }}>Address Book</h3>
+        <div className="page-box">
+          <h3 style={{ fontWeight: 700, fontSize: 15, borderBottom: "1px solid var(--border)", paddingBottom: 8, marginBottom: 12 }}>Address Book</h3>
           <div style={{ display: "flex", gap: 16, fontSize: 12 }}>
             <div>
-              <p style={{ fontWeight: "bold", marginBottom: 4 }}>Default Billing Address</p>
-              <p>John Doe</p>
-              <p>123 Main Street</p>
-              <p>New York, NY 10001</p>
-              <Link href="/account/billing" style={{ color: "#cc0000" }}>Edit Address</Link>
+              <p style={{ fontWeight: 700, marginBottom: 4 }}>Default Billing Address</p>
+              <div className="addr-box">{addrFmt(billing)}</div>
+              <Link href="/account/billing" style={{ color: "var(--red)" }}>Edit Address</Link>
             </div>
             <div>
-              <p style={{ fontWeight: "bold", marginBottom: 4 }}>Default Shipping Address</p>
-              <p>John Doe</p>
-              <p>123 Main Street</p>
-              <p>New York, NY 10001</p>
-              <Link href="/account/shipping" style={{ color: "#cc0000" }}>Edit Address</Link>
+              <p style={{ fontWeight: 700, marginBottom: 4 }}>Default Shipping Address</p>
+              <div className="addr-box">{addrFmt(shipping)}</div>
+              <Link href="/account/shipping" style={{ color: "var(--red)" }}>Edit Address</Link>
             </div>
           </div>
         </div>
 
+        {/* Recent Orders — full width */}
+        <div className="page-box" style={{ gridColumn: "1 / -1" }}>
+          <h3 style={{ fontWeight: 700, fontSize: 15, borderBottom: "1px solid var(--border)", paddingBottom: 8, marginBottom: 12 }}>My Orders</h3>
+          {orders.length === 0 ? (
+            <p style={{ color: "#888" }}>No orders yet. <Link href="/category" className="inline-link">Shop now</Link></p>
+          ) : (
+            <table className="orders-tbl">
+              <thead>
+                <tr>
+                  <th>Order #</th><th>Date</th><th>Status</th><th>Total</th><th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.slice(0, 6).map((o) => (
+                  <tr key={o.id}>
+                    <td><span className="order-num-link">#{o.id}</span></td>
+                    <td>{o.date}</td>
+                    <td>
+                      <span className={`status-pill ${o.status.toLowerCase().replace(" ", "-")}`}>{o.status}</span>
+                    </td>
+                    <td>${(+o.total).toFixed(2)}</td>
+                    <td>
+                      <Link href={`/account/orders/${o.id}`} className="btn-hs btn-red" style={{ fontSize: 11, padding: "5px 12px" }}>
+                        VIEW ORDER
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
         {/* Quick links */}
-        <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 20 }}>
-          <h3 style={{ fontWeight: "bold", fontSize: 15, borderBottom: "1px solid #eee", paddingBottom: 8, marginBottom: 12 }}>Quick Links</h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 13 }}>
+        <div className="page-box">
+          <h3 style={{ fontWeight: 700, fontSize: 15, borderBottom: "1px solid var(--border)", paddingBottom: 8, marginBottom: 12 }}>Quick Links</h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              { label: "My Orders", href: "/account/orders" },
-              { label: "Edit Account", href: "/account/edit" },
-              { label: "Edit Billing Address", href: "/account/billing" },
-              { label: "Edit Shipping Address", href: "/account/shipping" },
-              { label: "Shopping Cart", href: "/cart" },
-            ].map(({ label, href }) => (
-              <Link key={href} href={href} style={{ color: "#cc0000" }}>› {label}</Link>
+              ["Edit Account", "/account/edit"],
+              ["Edit Billing Address", "/account/billing"],
+              ["Edit Shipping Address", "/account/shipping"],
+              ["Shopping Cart", "/cart"],
+              ["Continue Shopping", "/category"],
+            ].map(([label, href]) => (
+              <Link key={href} href={href} style={{ color: "var(--red)" }}>› {label}</Link>
             ))}
           </div>
         </div>

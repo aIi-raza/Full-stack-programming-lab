@@ -2,27 +2,48 @@ import Link from "next/link";
 
 export default function TermsPage() {
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; Terms &amp; Conditions
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt; Terms &amp; Conditions
       </p>
-      <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 24, fontSize: 13, lineHeight: 1.8 }}>
-        <h1 style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Terms &amp; Conditions</h1>
-        {[
-          { title: "1. Acceptance of Terms", body: "By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service." },
-          { title: "2. Use of the Website", body: "This website is for personal, non-commercial use only. You may not modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer, or sell any information obtained from this website." },
-          { title: "3. Orders and Payment", body: "All orders are subject to product availability and confirmation of the order price. We reserve the right to refuse or cancel any order. Payment must be received prior to shipment. We accept major credit cards and PayPal." },
-          { title: "4. Shipping Policy", body: "Orders are typically processed within 2-3 business days. Standard delivery takes 7-10 business days. Free shipping is available on orders over $500. Expedited shipping options are available at checkout." },
-          { title: "5. Returns and Refunds", body: "We accept returns within 30 days of purchase for items in their original condition. Shipping costs for returns are the responsibility of the customer unless the return is due to a defect or error on our part." },
-          { title: "6. Privacy Policy", body: "We are committed to protecting your privacy. Any information you provide to us is kept confidential and will not be sold or shared with third parties except as required to fulfill your order." },
-          { title: "7. Limitation of Liability", body: "HotSpring Portable Spas shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use of this website or the products purchased herein." },
-        ].map(({ title, body }) => (
-          <div key={title} style={{ marginBottom: 20 }}>
-            <h2 style={{ fontSize: 15, fontWeight: "bold", marginBottom: 8, color: "#222" }}>{title}</h2>
-            <p style={{ color: "#555" }}>{body}</p>
+      <div className="page-box">
+        <h1 className="page-heading">Terms &amp; Conditions</h1>
+        <div style={{ fontSize: 13, lineHeight: 1.9, color: "#555" }}>
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>1. Acceptance of Terms</h3>
+          <p>By accessing and using the HotSpring Portable Spas website, you accept and agree to be bound by these terms. Additionally, when using our services, you shall be subject to any posted guidelines applicable to such services.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>2. Product Information</h3>
+          <p>HotSpring Portable Spas attempts to be as accurate as possible. However, we do not warrant that product descriptions are free of error. If a product is not as described, your sole remedy is to return it in unused condition.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>3. Pricing &amp; Payment</h3>
+          <p>All prices are in US Dollars. We reserve the right to refuse or cancel any orders placed at incorrect prices. We accept Visa, MasterCard, American Express, and PayPal. Your card will be charged upon order placement.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>4. Shipping &amp; Delivery</h3>
+          <p>HotSpring Portable Spas ships to all 50 United States. Standard delivery times are 7–10 business days. Large items such as hot tubs require freight delivery and may need scheduling coordination.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>5. Returns &amp; Refunds</h3>
+          <p>We offer a 30-day return policy on most items. Products must be returned in original unused condition. Shipping and handling charges are non-refundable. Custom orders are non-returnable.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>6. Warranty</h3>
+          <p>All products come with a manufacturer's warranty. Coverage varies by product and brand. Please refer to the specific product documentation for warranty details.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>7. Privacy Policy</h3>
+          <p>HotSpring Portable Spas takes your privacy seriously. We do not sell or share your personal information with third parties for marketing purposes. Industry-standard security measures protect your data.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>8. Limitation of Liability</h3>
+          <p>HotSpring Portable Spas shall not be liable for any indirect, incidental, or consequential damages resulting from use of the service.</p>
+
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "var(--dark)", margin: "16px 0 7px" }}>9. Contact</h3>
+          <p>For questions: legal@hotspringspas.com | 888-201-8899 | 5000N Ford Avenue, NY 20145</p>
+
+          <div className="info-note" style={{ marginTop: 20 }}>
+            By placing an order, you confirm you have read, understood, and agree to these Terms and Conditions.
           </div>
-        ))}
-        <p style={{ color: "#888", fontSize: 12, borderTop: "1px solid #eee", paddingTop: 16, marginTop: 20 }}>Last updated: January 2024</p>
+          <div style={{ marginTop: 20 }}>
+            <Link href="/checkout" className="btn-hs btn-red">I Accept — Return to Checkout</Link>
+            <Link href="/" className="btn-hs btn-dark" style={{ marginLeft: 10 }}>Return to Home</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

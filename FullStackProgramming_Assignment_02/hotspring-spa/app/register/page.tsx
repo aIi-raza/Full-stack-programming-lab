@@ -1,41 +1,75 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useStore } from "@/lib/store";
 
 export default function RegisterPage() {
+  const { register, login, showToast } = useStore();
+  const router = useRouter();
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", pass: "", repass: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  function set(k: string, v: string) { setForm((f) => ({ ...f, [k]: v })); }
+
+  function validate() {
+    const e: Record<string, string> = {};
+    if (!form.firstName.trim()) e.firstName = "This field is required.";
+    if (!form.lastName.trim()) e.lastName = "This field is required.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email address.";
+    if (form.pass.length < 6) e.pass = "Minimum 6 characters.";
+    if (form.pass !== form.repass) e.repass = "Passwords do not match.";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validate()) return;
+    if (register({ email: form.email, password: form.pass, firstName: form.firstName, lastName: form.lastName })) {
+      login(form.email, form.pass);
+      showToast("Account created! Redirecting…", "success");
+      setTimeout(() => router.push("/account"), 1300);
+    } else {
+      showToast("This email is already registered.", "error");
+      setErrors({ email: "Email already registered." });
+    }
+  }
+
+  const Field = ({ label, name, type = "text" }: { label: string; name: string; type?: string }) => (
+    <div className="label-input-row">
+      <label className="form-label-hs">{label} <span className="req">*</span></label>
+      <div>
+        <input
+          type={type}
+          className={`hs-input${errors[name] ? " is-invalid" : ""}`}
+          value={(form as any)[name]}
+          onChange={(e) => set(name, e.target.value)}
+        />
+        {errors[name] && <div className="hs-error show">{errors[name]}</div>}
+      </div>
+    </div>
+  );
+
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; Register
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt; Register
       </p>
-      <h1 style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Create New Account</h1>
-      <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 24, maxWidth: 560, fontSize: 13 }}>
-        <h3 style={{ fontWeight: "bold", marginBottom: 8 }}>Personal Information</h3>
-        <p style={{ color: "#cc0000", fontSize: 12, marginBottom: 16 }}>* Required Fields</p>
-
-        {[
-          { label: "First Name", type: "text" },
-          { label: "Last Name", type: "text" },
-          { label: "Email Address", type: "email" },
-          { label: "Password", type: "password" },
-          { label: "Confirm Password", type: "password" },
-        ].map(({ label, type }) => (
-          <div key={label} style={{ marginBottom: 12, display: "flex", alignItems: "center" }}>
-            <label style={{ width: 160, fontSize: 12 }}>{label} <span style={{ color: "#cc0000" }}>*</span></label>
-            <input type={type} style={{ flex: 1, border: "1px solid #ccc", padding: "5px 8px", fontSize: 12 }} />
+      <h1 className="page-heading">Create New Account</h1>
+      <div className="page-box">
+        <p style={{ color: "var(--red)", fontSize: 12, marginBottom: 16 }}>*Required Fields</p>
+        <form onSubmit={handleSubmit}>
+          <Field label="First Name" name="firstName" />
+          <Field label="Last Name" name="lastName" />
+          <Field label="Email Address" name="email" type="email" />
+          <Field label="Password" name="pass" type="password" />
+          <Field label="Confirm Password" name="repass" type="password" />
+          <div style={{ marginTop: 16, paddingLeft: 153 }}>
+            <button type="submit" className="btn-hs btn-red">REGISTER</button>
+            <Link href="/login" style={{ marginLeft: 16, color: "#0066cc", fontSize: 13 }}>Already have an account? Sign in</Link>
           </div>
-        ))}
-
-        <h3 style={{ fontWeight: "bold", margin: "20px 0 8px" }}>Newsletter</h3>
-        <div style={{ marginBottom: 16 }}>
-          <label style={{ fontSize: 12 }}>
-            <input type="checkbox" style={{ marginRight: 6 }} />
-            Subscribe to our newsletter
-          </label>
-        </div>
-
-        <div style={{ display: "flex", gap: 12 }}>
-          <Link href="/" style={{ backgroundColor: "#cc0000", color: "white", padding: "7px 20px", fontWeight: "bold", fontSize: 13, display: "inline-block" }}>REGISTER</Link>
-          <Link href="/login" style={{ backgroundColor: "#888", color: "white", padding: "7px 20px", fontSize: 13, display: "inline-block" }}>BACK TO LOGIN</Link>
-        </div>
+        </form>
       </div>
     </div>
   );

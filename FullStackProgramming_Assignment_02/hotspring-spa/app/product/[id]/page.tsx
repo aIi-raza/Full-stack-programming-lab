@@ -1,84 +1,170 @@
+"use client";
+import { use, useState } from "react";
 import Link from "next/link";
-import { products } from "@/lib/data";
+import { products, CARD_BG } from "@/lib/data";
+import { useStore } from "@/lib/store";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products.find((p) => p.id === parseInt(params.id)) || products[8];
+const TABS = ["Details", "Quick Specs", "Accessories", "Reviews", "Q & A"];
+
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const product = products.find((p) => p.id === parseInt(id)) ?? products[0];
+  const { addToCart, addToWishlist } = useStore();
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeThumb, setActiveThumb] = useState(0);
+  const [calcExtra, setCalcExtra] = useState(0);
+
+  const related = products.filter((p) => p.id !== product.id).slice(0, 5);
+  const bg = CARD_BG[product.id % CARD_BG.length];
+
+  const calcOptions = [
+    { label: "Interior Color:", opts: [{ label: "-- No Change --", val: 0 }] },
+    { label: "Outside Shell Color:", opts: [{ label: "-- No Change --", val: 0 }] },
+    { label: "Circulation Pump:", opts: [{ label: "-- No Change --", val: 0 }, { label: "Add Circ Pump (+$150)", val: 150 }] },
+    { label: "Polar Foam:", opts: [{ label: "-- No Change --", val: 0 }, { label: "Add Polar Foam (+$200)", val: 200 }] },
+    { label: "Cover / Steps:", opts: [{ label: "-- No Change --", val: 0 }, { label: "Add Cover & Steps (+$250)", val: 250 }] },
+  ];
 
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; {product.name}
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt;{" "}
+        <Link href="/category" style={{ color: "var(--red)" }}>Category</Link> &gt;{" "}
+        {product.name.substring(0, 40)}...
       </p>
-      <h1 style={{ fontSize: 18, fontWeight: "bold", marginBottom: 16 }}>{product.name}</h1>
 
-      <div style={{ display: "flex", gap: 24 }}>
-        {/* Left: images */}
-        <div style={{ width: 260, flexShrink: 0 }}>
-          <div style={{ height: 200, backgroundColor: "#e8e8e8", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 8, border: "1px solid #ddd" }}>
-            <span style={{ color: "#999", fontSize: 13 }}>[Product Image]</span>
+      <div className="pd-grid">
+        {/* LEFT: Images */}
+        <div>
+          <div className="pd-main-img" style={{ background: CARD_BG[activeThumb % CARD_BG.length] }}>
+            <span style={{ fontSize: 90, color: "rgba(255,255,255,.7)" }}>♨</span>
           </div>
-          <div style={{ display: "flex", gap: 4 }}>
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} style={{ width: 55, height: 45, backgroundColor: "#e0e0e0", border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 10, color: "#999" }}>img</div>
-            ))}
-          </div>
-          <p style={{ fontSize: 11, color: "#cc0000", marginTop: 6 }}>+ Larger View</p>
-        </div>
-
-        {/* Center: details */}
-        <div style={{ flex: 1, fontSize: 13 }}>
-          <div style={{ color: "#f0a000", marginBottom: 4 }}>★★★★☆ (14 reviews)</div>
-          {product.originalPrice && (
-            <p style={{ color: "#666", fontSize: 12 }}>Retail Price: <span style={{ textDecoration: "line-through" }}>${product.originalPrice}</span></p>
-          )}
-          <p style={{ color: "#666", fontSize: 12 }}>Sale price</p>
-          <p style={{ color: "#cc0000", fontSize: 24, fontWeight: "bold", marginBottom: 4 }}>${product.price}</p>
-          <p style={{ color: "#cc0000", fontSize: 11, marginBottom: 12 }}>Low Price Guarantee</p>
-          <div style={{ fontSize: 12, lineHeight: 1.8 }}>
-            <p><strong>Size/Seating Capacity</strong><br />77&quot;, 77&quot;, 32&quot; / 6 Persons</p>
-            <p><strong>Seating Design</strong><br />Bucket, Lounge, Chair, Bench</p>
-            <p><strong>Water Capacity / Dry Weight</strong><br />305 Gallons / 573 lbs</p>
-            <p><strong>Number of Pumps</strong><br />2 X 5HP</p>
-            <p><strong>Electrical</strong><br />5.5 KW Heavy Heater, 220V, 50 amp /ETL Certificate</p>
-          </div>
-          <p style={{ color: "green", fontSize: 12, marginTop: 8 }}>In Stock (available)</p>
-          <button style={{ backgroundColor: "#cc0000", color: "white", border: "none", padding: "8px 20px", cursor: "pointer", marginTop: 8, fontSize: 13 }}>
-            🛒 ADD TO CART
-          </button>
-
-          {/* Tabs */}
-          <div style={{ marginTop: 20 }}>
-            <div style={{ display: "flex", borderBottom: "2px solid #ddd", gap: 0, fontSize: 12 }}>
-              {["Details", "Quick Specs", "Accessories", "Reviews", "Q & A"].map((tab, i) => (
-                <button key={tab} style={{ padding: "8px 14px", border: "1px solid #ddd", backgroundColor: i === 0 ? "white" : "#f5f5f5", borderBottom: i === 0 ? "2px solid white" : "none", cursor: "pointer", fontSize: 12 }}>{tab}</button>
-              ))}
-            </div>
-            <div style={{ padding: "16px", border: "1px solid #ddd", borderTop: "none", fontSize: 12, lineHeight: 1.6 }}>
-              <p><strong>Product Details</strong></p>
-              <p>Energy Star Rated - No</p>
-              <h3 style={{ fontWeight: "bold", margin: "8px 0" }}>{product.name}</h3>
-              <p style={{ color: "#666" }}>This is Photoshop&apos;s version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: Price calculator */}
-        <div style={{ width: 180, flexShrink: 0, fontSize: 12 }}>
-          <h3 style={{ fontWeight: "bold", backgroundColor: "#f5f5f5", padding: "8px", border: "1px solid #ddd", marginBottom: 0 }}>Price Calculator</h3>
-          <div style={{ border: "1px solid #ddd", padding: 10 }}>
-            {["Interior Color:", "Outside Shell Color:", "Circulation Pump:", "Polar Foam:", "Cover / Steps:", "Extra Filter Sets:", "Deluxe Cover Lifter:"].map((opt) => (
-              <div key={opt} style={{ marginBottom: 6 }}>
-                <label style={{ display: "block", color: "#555", fontSize: 11 }}>{opt}</label>
-                <select style={{ width: "100%", border: "1px solid #ccc", padding: "2px", fontSize: 11 }}><option></option></select>
+          <div className="thumb-strip">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className={`thumb-item${activeThumb === i ? " active" : ""}`}
+                style={{ background: CARD_BG[i % CARD_BG.length] }}
+                onClick={() => setActiveThumb(i)}>
+                <span style={{ fontSize: 20, color: "rgba(255,255,255,.8)" }}>♨</span>
               </div>
             ))}
-            <p style={{ fontWeight: "bold", color: "#cc0000", textAlign: "right", marginTop: 8 }}>Total Price: $650.00</p>
-            <button style={{ width: "100%", backgroundColor: "#cc0000", color: "white", border: "none", padding: "6px", cursor: "pointer", fontSize: 12 }}>🛒 ADD TO CART</button>
           </div>
-          <div style={{ marginTop: 12, border: "1px solid #ddd", padding: 10 }}>
-            <h4 style={{ fontWeight: "bold", marginBottom: 8 }}>Download Resources</h4>
-            {["Full Line Brochure", "Owner&apos;s Manual", "Specifications Sheet"].map((r) => (
-              <p key={r} style={{ marginBottom: 4 }}><a href="#" style={{ color: "#cc0000", fontSize: 11 }}>📄 {r}</a></p>
+          <p style={{ fontSize: 11, color: "var(--red)", marginTop: 6, cursor: "pointer" }}>+ Larger View</p>
+        </div>
+
+        {/* CENTER: Details */}
+        <div style={{ fontSize: 13 }}>
+          <h1 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 21, marginBottom: 4 }}>{product.name}</h1>
+          <p style={{ fontSize: 11, color: "#999", marginBottom: 12 }}>
+            Abt Model:{product.model} | UPC Code: 822CS868729
+          </p>
+          <div className="stars-row">
+            {"★".repeat(product.rating)}{"☆".repeat(5 - product.rating)}
+            <a href="#reviews" style={{ color: "var(--red)", fontSize: 12, fontWeight: 600, marginLeft: 5 }}>
+              ({product.reviews} reviews)
+            </a>
+          </div>
+          {product.price > product.salePrice && (
+            <p style={{ color: "#999", fontSize: 13, marginTop: 8 }}>
+              Retail Price: <span style={{ textDecoration: "line-through" }}>${product.price.toFixed(2)}</span>
+            </p>
+          )}
+          <p style={{ color: "#999", fontSize: 13 }}>Sale price</p>
+          <div className="price-sale">${product.salePrice.toFixed(2)}</div>
+          <p style={{ color: "var(--red)", fontSize: 12, fontStyle: "italic" }}>Low Price Guarantee</p>
+          <span className="badge-instock">✓ In Stock</span>
+          <table className="spec-tbl" style={{ marginBottom: 12 }}>
+            <tbody>
+              <tr><td>Capacity</td><td>{product.capacity}</td></tr>
+              <tr><td>Jets</td><td>{product.jets}</td></tr>
+              <tr><td>Pumps</td><td>{product.pumps}</td></tr>
+              <tr><td>Voltage</td><td>{product.voltage}</td></tr>
+              <tr><td>Water / Weight</td><td>{product.gallons}</td></tr>
+              <tr><td>Heater</td><td>{product.heater}</td></tr>
+            </tbody>
+          </table>
+          <button className="btn-hs btn-red pulse-red" onClick={() => addToCart(product)}>
+            🛒 ADD TO CART
+          </button>
+          <button style={{ marginLeft: 10, background: "none", border: "1px solid #ccc", padding: "9px 14px", cursor: "pointer", fontSize: 12, borderRadius: 3 }}
+            onClick={() => addToWishlist(product.name)}>
+            ♡ WISHLIST
+          </button>
+
+          {/* TABS */}
+          <div className="prod-tabs">
+            <div className="tab-nav">
+              {TABS.map((t, i) => (
+                <button key={t} className={`tab-btn${activeTab === i ? " active" : ""}`} onClick={() => setActiveTab(i)}>{t}</button>
+              ))}
+            </div>
+            <div className={`tab-pane${activeTab === 0 ? " active" : ""}`}>
+              <p><strong>{product.name}</strong></p>
+              <p>{product.desc}</p>
+            </div>
+            <div className={`tab-pane${activeTab === 1 ? " active" : ""}`}>
+              <table className="spec-tbl">
+                <tbody>
+                  <tr><td>Jets</td><td>{product.jets}</td></tr>
+                  <tr><td>Pumps</td><td>{product.pumps}</td></tr>
+                  <tr><td>Voltage</td><td>{product.voltage}</td></tr>
+                  <tr><td>Gallons</td><td>{product.gallons}</td></tr>
+                  <tr><td>Heater</td><td>{product.heater}</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div className={`tab-pane${activeTab === 2 ? " active" : ""}`}><p>No accessories available for this model.</p></div>
+            <div className={`tab-pane${activeTab === 3 ? " active" : ""}`} id="reviews">
+              <p>{'★'.repeat(product.rating)} — {product.reviews} customer reviews. Rated {product.rating}/5.</p>
+            </div>
+            <div className={`tab-pane${activeTab === 4 ? " active" : ""}`}><p>Have a question? Contact our support team.</p></div>
+          </div>
+
+          {/* RELATED */}
+          <div style={{ marginTop: 28, borderTop: "2px solid var(--border)", paddingTop: 18 }}>
+            <p style={{ fontSize: 15, fontWeight: 700, marginBottom: 14 }}>Related Products</p>
+            <div className="related-scroll">
+              {related.map((rp) => (
+                <Link key={rp.id} href={`/product/${rp.id}`} className="rel-item">
+                  <div className="rel-icon" style={{ background: CARD_BG[rp.id % CARD_BG.length] }}>
+                    <span style={{ color: "rgba(255,255,255,.8)", fontSize: 28 }}>♨</span>
+                  </div>
+                  <div className="rel-name">{rp.name.substring(0, 28)}...</div>
+                  <div className="rel-price">${rp.salePrice.toFixed(2)}</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: Price Calculator */}
+        <div style={{ fontSize: 12 }}>
+          <div className="price-calc-box">
+            <h5 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, marginBottom: 12 }}>Price Calculator</h5>
+            {calcOptions.map((o) => (
+              <div key={o.label} className="calc-row">
+                <label>{o.label}</label>
+                <select onChange={(e) => {
+                  const rows = calcOptions.map((x) => x.opts[0].val);
+                  // simple: just update total
+                  setCalcExtra((prev) => prev); // handled below
+                }}>
+                  {o.opts.map((opt) => (
+                    <option key={opt.label} value={opt.val}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+            <div className="calc-total">
+              Total: <span className="amount-display">${(product.salePrice + calcExtra).toFixed(2)}</span>
+            </div>
+            <button className="btn-cart" onClick={() => addToCart(product)}>🛒 ADD TO CART</button>
+          </div>
+          <div className="price-calc-box" style={{ marginTop: 12 }}>
+            <h5 style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, marginBottom: 10 }}>Download Resources</h5>
+            {["Full Line Brochure", "Owner's Manual", "Specifications Sheet"].map((r) => (
+              <p key={r} style={{ marginBottom: 6 }}>
+                <a href="#" style={{ color: "var(--red)", fontSize: 12, display: "flex", alignItems: "center", gap: 5 }}>📄 {r}</a>
+              </p>
             ))}
           </div>
         </div>

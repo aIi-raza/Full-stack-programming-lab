@@ -1,42 +1,71 @@
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useStore } from "@/lib/store";
+import { useRouter } from "next/navigation";
 
-const fields = [
-  { label: "First Name", type: "text" },
-  { label: "Last Name", type: "text" },
-  { label: "Company", type: "text" },
-  { label: "Address", type: "text" },
-  { label: "City", type: "text" },
-  { label: "State/Province", type: "text" },
-  { label: "Zip/Postal Code", type: "text" },
-  { label: "Country", type: "text" },
-  { label: "Phone Number", type: "tel" },
-];
+interface Address {
+  firstName: string; lastName: string; company: string;
+  address: string; city: string; state: string; zip: string; country: string;
+}
+
+const DEFAULT: Address = { firstName: "Farrukh", lastName: "Javaid", company: "Hotub Spas", address: "Plot 10 Tech Society", city: "California", state: "CA", zip: "20112", country: "United States" };
 
 export default function EditShippingPage() {
+  const { user, showToast } = useStore();
+  const router = useRouter();
+  const [form, setForm] = useState<Address>(DEFAULT);
+
+  useEffect(() => {
+    if (!user) { router.push("/login"); return; }
+    try {
+      const saved = JSON.parse(localStorage.getItem("hs_shipping") || "null");
+      if (saved) setForm(saved);
+    } catch {}
+  }, [user, router]);
+
+  function set(k: keyof Address, v: string) { setForm((f) => ({ ...f, [k]: v })); }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    localStorage.setItem("hs_shipping", JSON.stringify(form));
+    showToast("Shipping address saved!", "success");
+    setTimeout(() => router.push("/account"), 1200);
+  }
+
+  if (!user) return null;
+
+  const fields: { label: string; key: keyof Address; req?: boolean }[] = [
+    { label: "First Name", key: "firstName", req: true },
+    { label: "Last Name", key: "lastName", req: true },
+    { label: "Company", key: "company" },
+    { label: "Street Address", key: "address", req: true },
+    { label: "City", key: "city", req: true },
+    { label: "State / Province", key: "state", req: true },
+    { label: "ZIP / Postal Code", key: "zip", req: true },
+    { label: "Country", key: "country", req: true },
+  ];
+
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; <Link href="/account" style={{ color: "#cc0000" }}>My Account</Link> &gt; Edit Shipping Address
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt;{" "}
+        <Link href="/account" style={{ color: "var(--red)" }}>My Account</Link> &gt; Edit Shipping Address
       </p>
-      <h1 style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Edit Shipping Address</h1>
-      <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 24, maxWidth: 560, fontSize: 13 }}>
-        <p style={{ color: "#cc0000", fontSize: 12, marginBottom: 16 }}>* Required Fields</p>
-        {fields.map(({ label, type }) => (
-          <div key={label} style={{ marginBottom: 12, display: "flex", alignItems: "center" }}>
-            <label style={{ width: 160, fontSize: 12 }}>{label} <span style={{ color: "#cc0000" }}>*</span></label>
-            <input type={type} style={{ flex: 1, border: "1px solid #ccc", padding: "5px 8px", fontSize: 12 }} />
+      <h1 className="page-heading">Edit Shipping Address</h1>
+      <div className="page-box" style={{ maxWidth: 600 }}>
+        <form onSubmit={handleSubmit}>
+          {fields.map(({ label, key, req }) => (
+            <div key={key} className="label-input-row">
+              <label className="form-label-hs">{label} {req && <span className="req">*</span>}</label>
+              <input type="text" className="hs-input" value={form[key]} onChange={(e) => set(key, e.target.value)} />
+            </div>
+          ))}
+          <div style={{ marginTop: 16, paddingLeft: 153, display: "flex", gap: 12 }}>
+            <button type="submit" className="btn-hs btn-red">SAVE ADDRESS</button>
+            <Link href="/account" className="btn-hs btn-dark">CANCEL</Link>
           </div>
-        ))}
-        <div style={{ marginBottom: 12 }}>
-          <label style={{ fontSize: 12 }}>
-            <input type="checkbox" style={{ marginRight: 6 }} />
-            Same as billing address
-          </label>
-        </div>
-        <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
-          <Link href="/account" style={{ backgroundColor: "#cc0000", color: "white", padding: "7px 20px", fontWeight: "bold", fontSize: 13, display: "inline-block" }}>SAVE ADDRESS</Link>
-          <Link href="/account" style={{ backgroundColor: "#888", color: "white", padding: "7px 20px", fontSize: 13, display: "inline-block" }}>BACK</Link>
-        </div>
+        </form>
       </div>
     </div>
   );

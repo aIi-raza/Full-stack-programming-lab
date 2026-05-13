@@ -1,25 +1,48 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useStore } from "@/lib/store";
 
 export default function ForgotPasswordPage() {
+  const { showToast } = useStore();
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    if (!valid) { setError("Enter a valid email address."); return; }
+    setError("");
+    showToast(`Password reset link sent to ${email}`, "success");
+    setTimeout(() => router.push("/login"), 2000);
+  }
+
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px" }}>
+    <div className="hs-container" style={{ padding: "16px" }}>
       <p style={{ fontSize: 12, color: "#666", marginBottom: 12 }}>
-        <Link href="/" style={{ color: "#cc0000" }}>Home</Link> &gt; Forgot Password
+        <Link href="/" style={{ color: "var(--red)" }}>Home</Link> &gt; Forgot Password
       </p>
-      <h1 style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Forgot Your Password?</h1>
-      <div style={{ backgroundColor: "white", border: "1px solid #ddd", padding: 24, maxWidth: 480, fontSize: 13 }}>
-        <p style={{ color: "#666", marginBottom: 16 }}>
+      <h1 className="page-heading">Forgot Your Password?</h1>
+      <div className="page-box" style={{ maxWidth: 500 }}>
+        <p style={{ fontSize: 13, color: "#666", marginBottom: 20 }}>
           Please enter your email address below. You will receive a link to reset your password.
         </p>
-        <p style={{ color: "#cc0000", fontSize: 12, marginBottom: 16 }}>* Required Fields</p>
-        <div style={{ marginBottom: 16, display: "flex", alignItems: "center" }}>
-          <label style={{ width: 140, fontSize: 12 }}>Email Address <span style={{ color: "#cc0000" }}>*</span></label>
-          <input type="email" style={{ flex: 1, border: "1px solid #ccc", padding: "5px 8px", fontSize: 12 }} />
-        </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <Link href="/" style={{ backgroundColor: "#cc0000", color: "white", padding: "7px 20px", fontWeight: "bold", fontSize: 13, display: "inline-block" }}>RESET PASSWORD</Link>
-          <Link href="/login" style={{ backgroundColor: "#888", color: "white", padding: "7px 20px", fontSize: 13, display: "inline-block" }}>BACK TO LOGIN</Link>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="label-input-row">
+            <label className="form-label-hs">Email <span className="req">*</span></label>
+            <div>
+              <input type="email" className={`hs-input${error ? " is-invalid" : ""}`}
+                value={email} onChange={(e) => setEmail(e.target.value)} />
+              {error && <div className="hs-error show">{error}</div>}
+            </div>
+          </div>
+          <div style={{ marginTop: 16, paddingLeft: 153, display: "flex", gap: 16, alignItems: "center" }}>
+            <button type="submit" className="btn-hs btn-red">RESET PASSWORD</button>
+            <Link href="/login" style={{ color: "#0066cc", fontSize: 13 }}>Back to Login</Link>
+          </div>
+        </form>
       </div>
     </div>
   );
